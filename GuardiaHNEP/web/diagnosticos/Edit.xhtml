@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DiagnosticosEditDlg" widgetVar="DiagnosticosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDiagnosticosTitle}" closeOnEscape="true">
+
+            <h:form id="DiagnosticosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{diagnosticosController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDiagnosticosLabel_codDiagnostico}" for="codDiagnostico" />
+                        <h:outputText id="codDiagnostico" value="#{diagnosticosController.selected.codDiagnostico}" />
+
+                        <p:outputLabel value="#{myBundle.EditDiagnosticosLabel_nomDiagnostico}" for="nomDiagnostico" />
+                        <p:inputText id="nomDiagnostico" value="#{diagnosticosController.selected.nomDiagnostico}" title="#{myBundle.EditDiagnosticosTitle_nomDiagnostico}" required="true" requiredMessage="#{myBundle.EditDiagnosticosRequiredMessage_nomDiagnostico}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{diagnosticosController.save}" value="#{myBundle.Save}" update="display,:DiagnosticosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DiagnosticosEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DiagnosticosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

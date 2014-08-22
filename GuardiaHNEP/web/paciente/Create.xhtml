@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PacienteCreateDlg" widgetVar="PacienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePacienteTitle}" closeOnEscape="true">
+
+            <h:form id="PacienteCreateForm">
+
+                <h:panelGroup id="display" rendered="#{pacienteController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_DNIPac}" for="DNIPac" />
+                        <p:inputText id="DNIPac" value="#{pacienteController.selected.DNIPac}" title="#{myBundle.CreatePacienteTitle_DNIPac}" required="true" requiredMessage="#{myBundle.CreatePacienteRequiredMessage_DNIPac}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_apellidoPac}" for="apellidoPac" />
+                        <p:inputText id="apellidoPac" value="#{pacienteController.selected.apellidoPac}" title="#{myBundle.CreatePacienteTitle_apellidoPac}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_nombrePac}" for="nombrePac" />
+                        <p:inputText id="nombrePac" value="#{pacienteController.selected.nombrePac}" title="#{myBundle.CreatePacienteTitle_nombrePac}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_domicilio}" for="domicilio" />
+                        <p:inputText id="domicilio" value="#{pacienteController.selected.domicilio}" title="#{myBundle.CreatePacienteTitle_domicilio}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_localidad}" for="localidad" />
+                        <p:inputText id="localidad" value="#{pacienteController.selected.localidad}" title="#{myBundle.CreatePacienteTitle_localidad}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_fechaNacPac}" for="fechaNacPac" />
+                        <p:calendar id="fechaNacPac" pattern="MM/dd/yyyy" value="#{pacienteController.selected.fechaNacPac}" title="#{myBundle.CreatePacienteTitle_fechaNacPac}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_tutorDNITut}" for="tutorDNITut" />
+                        <p:selectOneMenu id="tutorDNITut" value="#{pacienteController.selected.tutorDNITut}" required="true" requiredMessage="#{myBundle.CreatePacienteRequiredMessage_tutorDNITut}" converter="tutorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tutorController.items}"
+                                           var="tutorDNITutItem"
+                                           itemValue="#{tutorDNITutItem}"
+                                           itemLabel="#{tutorDNITutItem.DNITut.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pacienteController.saveNew}" value="#{myBundle.Save}" update="display,:PacienteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PacienteCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PacienteCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

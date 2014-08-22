@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicosCreateDlg" widgetVar="MedicosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateMedicosTitle}" closeOnEscape="true">
+
+            <h:form id="MedicosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{medicosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateMedicosLabel_matriculaMed}" for="matriculaMed" />
+                        <p:inputText id="matriculaMed" value="#{medicosController.selected.matriculaMed}" title="#{myBundle.CreateMedicosTitle_matriculaMed}" required="true" requiredMessage="#{myBundle.CreateMedicosRequiredMessage_matriculaMed}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicosLabel_dniMed}" for="dniMed" />
+                        <p:inputText id="dniMed" value="#{medicosController.selected.dniMed}" title="#{myBundle.CreateMedicosTitle_dniMed}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicosLabel_apellidoMed}" for="apellidoMed" />
+                        <p:inputText id="apellidoMed" value="#{medicosController.selected.apellidoMed}" title="#{myBundle.CreateMedicosTitle_apellidoMed}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicosLabel_nombreMed}" for="nombreMed" />
+                        <p:inputText id="nombreMed" value="#{medicosController.selected.nombreMed}" title="#{myBundle.CreateMedicosTitle_nombreMed}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicosLabel_direccionMed}" for="direccionMed" />
+                        <p:inputText id="direccionMed" value="#{medicosController.selected.direccionMed}" title="#{myBundle.CreateMedicosTitle_direccionMed}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicosLabel_telMed}" for="telMed" />
+                        <p:inputText id="telMed" value="#{medicosController.selected.telMed}" title="#{myBundle.CreateMedicosTitle_telMed}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicosLabel_especialidadCodIdEsp}" for="especialidadCodIdEsp" />
+                        <p:selectOneMenu id="especialidadCodIdEsp" value="#{medicosController.selected.especialidadCodIdEsp}" required="true" requiredMessage="#{myBundle.CreateMedicosRequiredMessage_especialidadCodIdEsp}" converter="especialidadConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{especialidadController.items}"
+                                           var="especialidadCodIdEspItem"
+                                           itemValue="#{especialidadCodIdEspItem}"
+                                           itemLabel="#{especialidadCodIdEspItem.codIdEsp.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicosController.saveNew}" value="#{myBundle.Save}" update="display,:MedicosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MedicosCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="MedicosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

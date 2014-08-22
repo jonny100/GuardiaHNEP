@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ObraSocialPorPacienteViewDlg" widgetVar="ObraSocialPorPacienteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewObraSocialPorPacienteTitle}" closeOnEscape="true">
+
+            <h:form id="ObraSocialPorPacienteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{obraSocialPorPacienteController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewObraSocialPorPacienteLabel_numeroAfiliado}"/>
+                        <h:outputText value="#{obraSocialPorPacienteController.selected.numeroAfiliado}" title="#{myBundle.ViewObraSocialPorPacienteTitle_numeroAfiliado}"/>
+
+                        <h:outputText value="#{myBundle.ViewObraSocialPorPacienteLabel_obraSocial}"/>
+                        <h:outputText value="#{obraSocialPorPacienteController.selected.obraSocial.codIdObraSocial}"/>
+
+                        <h:outputText value="#{myBundle.ViewObraSocialPorPacienteLabel_paciente}"/>
+                        <h:outputText value="#{obraSocialPorPacienteController.selected.paciente.DNIPac}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="ObraSocialPorPacienteViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

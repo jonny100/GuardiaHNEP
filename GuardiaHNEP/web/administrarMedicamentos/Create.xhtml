@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AdministrarMedicamentosCreateDlg" widgetVar="AdministrarMedicamentosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateAdministrarMedicamentosTitle}" closeOnEscape="true">
+
+            <h:form id="AdministrarMedicamentosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{administrarMedicamentosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateAdministrarMedicamentosLabel_dniEnferm}" for="dniEnferm" />
+                        <p:selectOneMenu id="dniEnferm" value="#{administrarMedicamentosController.selected.dniEnferm}" required="true" requiredMessage="#{myBundle.CreateAdministrarMedicamentosRequiredMessage_dniEnferm}" converter="enfermeroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{enfermeroController.items}"
+                                           var="dniEnfermItem"
+                                           itemValue="#{dniEnfermItem}"
+                                           itemLabel="#{dniEnfermItem.dniEnferm.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateAdministrarMedicamentosLabel_paciente}" for="paciente" />
+                        <p:selectOneMenu id="paciente" value="#{administrarMedicamentosController.selected.paciente}" required="true" requiredMessage="#{myBundle.CreateAdministrarMedicamentosRequiredMessage_paciente}" converter="pacienteConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{pacienteController.items}"
+                                           var="pacienteItem"
+                                           itemValue="#{pacienteItem}"
+                                           itemLabel="#{pacienteItem.DNIPac.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateAdministrarMedicamentosLabel_medicamentos}" for="medicamentos" />
+                        <p:selectOneMenu id="medicamentos" value="#{administrarMedicamentosController.selected.medicamentos}" required="true" requiredMessage="#{myBundle.CreateAdministrarMedicamentosRequiredMessage_medicamentos}" converter="medicamentosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{medicamentosController.items}"
+                                           var="medicamentosItem"
+                                           itemValue="#{medicamentosItem}"
+                                           itemLabel="#{medicamentosItem.codIdMedicamento.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{administrarMedicamentosController.saveNew}" value="#{myBundle.Save}" update="display,:AdministrarMedicamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AdministrarMedicamentosCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="AdministrarMedicamentosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

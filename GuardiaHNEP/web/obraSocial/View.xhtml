@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ObraSocialViewDlg" widgetVar="ObraSocialViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewObraSocialTitle}" closeOnEscape="true">
+
+            <h:form id="ObraSocialViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{obraSocialController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewObraSocialLabel_codIdObraSocial}"/>
+                        <h:outputText value="#{obraSocialController.selected.codIdObraSocial}" title="#{myBundle.ViewObraSocialTitle_codIdObraSocial}"/>
+
+                        <h:outputText value="#{myBundle.ViewObraSocialLabel_nombreOs}"/>
+                        <h:outputText value="#{obraSocialController.selected.nombreOs}" title="#{myBundle.ViewObraSocialTitle_nombreOs}"/>
+
+                        <h:outputText value="#{myBundle.ViewObraSocialLabel_direccionOs}"/>
+                        <h:outputText value="#{obraSocialController.selected.direccionOs}" title="#{myBundle.ViewObraSocialTitle_direccionOs}"/>
+
+                        <h:outputText value="#{myBundle.ViewObraSocialLabel_telefOs}"/>
+                        <h:outputText value="#{obraSocialController.selected.telefOs}" title="#{myBundle.ViewObraSocialTitle_telefOs}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="ObraSocialViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

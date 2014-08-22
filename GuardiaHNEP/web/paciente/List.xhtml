@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PacienteListForm">
+
+        <p:panel header="#{myBundle.ListPacienteTitle}">
+            <p:contextMenu id="PacienteDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('PacienteListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('PacienteListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('PacienteListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('PacienteListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.PacienteMenuItem_internacionTransitoriaCollection}" icon="ui-icon-search"  action="#{pacienteController.navigateInternacionTransitoriaCollection}" disabled="#{empty pacienteController.selected.internacionTransitoriaCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.PacienteMenuItem_histClinicaCollection}" icon="ui-icon-search"  action="#{pacienteController.navigateHistClinicaCollection}" disabled="#{empty pacienteController.selected.histClinicaCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.PacienteMenuItem_obraSocialPorPacienteCollection}" icon="ui-icon-search"  action="#{pacienteController.navigateObraSocialPorPacienteCollection}" disabled="#{empty pacienteController.selected.obraSocialPorPacienteCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.PacienteMenuItem_administrarMedicamentosCollection}" icon="ui-icon-search"  action="#{pacienteController.navigateAdministrarMedicamentosCollection}" disabled="#{empty pacienteController.selected.administrarMedicamentosCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.PacienteMenuItem_tutorDNITut}" icon="ui-icon-search"  actionListener="#{pacienteController.prepareTutorDNITut}" update=":TutorViewForm" oncomplete="TutorViewDialog.show()" disabled="#{empty pacienteController.selected.tutorDNITut}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{pacienteController.items}"
+                         var="item"
+                         rowKey="#{item.DNIPac}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{pacienteController.selected}">
+
+                <p:ajax event="rowSelect"   update=":PacienteListForm:createButton :PacienteListForm:viewButton :PacienteListForm:editButton :PacienteListForm:deleteButton :PacienteListForm:PacienteDataTableContextMenu" listener="#{pacienteController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":PacienteListForm:createButton :PacienteListForm:viewButton :PacienteListForm:editButton :PacienteListForm:deleteButton :PacienteListForm:PacienteDataTableContextMenu" listener="#{pacienteController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PacienteListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.DNIPac}" filterBy="#{item.DNIPac}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPacienteTitle_DNIPac}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.DNIPac}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellidoPac}" filterBy="#{item.apellidoPac}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPacienteTitle_apellidoPac}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidoPac}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombrePac}" filterBy="#{item.nombrePac}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPacienteTitle_nombrePac}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombrePac}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.domicilio}" filterBy="#{item.domicilio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPacienteTitle_domicilio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.domicilio}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.localidad}" filterBy="#{item.localidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPacienteTitle_localidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.localidad}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaNacPac}" filterBy="#{item.fechaNacPac}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPacienteTitle_fechaNacPac}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaNacPac}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.tutorDNITut.DNITut}" filterBy="#{item.tutorDNITut.DNITut}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListPacienteTitle_tutorDNITut}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tutorDNITut.DNITut}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{pacienteController.prepareCreate}" update=":PacienteCreateForm" oncomplete="PacienteCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":PacienteViewForm" oncomplete="PacienteViewDialog.show()" disabled="#{empty pacienteController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PacienteEditForm" oncomplete="PacienteEditDialog.show()" disabled="#{empty pacienteController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{pacienteController.delete}" update=":growl,datalist" disabled="#{empty pacienteController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CamasListForm">
+
+        <p:panel header="#{myBundle.ListCamasTitle}">
+            <p:contextMenu id="CamasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CamasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CamasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CamasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CamasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CamasMenuItem_internacionTransitoriaNumIntern}" icon="ui-icon-search"  actionListener="#{camasController.prepareInternacionTransitoriaNumIntern}" update=":InternacionTransitoriaViewForm" oncomplete="InternacionTransitoriaViewDialog.show()" disabled="#{empty camasController.selected.internacionTransitoriaNumIntern}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{camasController.items}"
+                         var="item"
+                         rowKey="#{item.numCama}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{camasController.selected}">
+
+                <p:ajax event="rowSelect"   update=":CamasListForm:createButton :CamasListForm:viewButton :CamasListForm:editButton :CamasListForm:deleteButton :CamasListForm:CamasDataTableContextMenu" listener="#{camasController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":CamasListForm:createButton :CamasListForm:viewButton :CamasListForm:editButton :CamasListForm:deleteButton :CamasListForm:CamasDataTableContextMenu" listener="#{camasController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CamasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.numCama}" filterBy="#{item.numCama}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCamasTitle_numCama}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numCama}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCamasTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.internacionTransitoriaNumIntern.numIntern}" filterBy="#{item.internacionTransitoriaNumIntern.numIntern}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCamasTitle_internacionTransitoriaNumIntern}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.internacionTransitoriaNumIntern.numIntern}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{camasController.prepareCreate}" update=":CamasCreateForm" oncomplete="CamasCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CamasViewForm" oncomplete="CamasViewDialog.show()" disabled="#{empty camasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CamasEditForm" oncomplete="CamasEditDialog.show()" disabled="#{empty camasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{camasController.delete}" update=":growl,datalist" disabled="#{empty camasController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

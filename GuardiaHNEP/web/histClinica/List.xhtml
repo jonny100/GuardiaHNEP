@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="HistClinicaListForm">
+
+        <p:panel header="#{myBundle.ListHistClinicaTitle}">
+            <p:contextMenu id="HistClinicaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('HistClinicaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('HistClinicaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('HistClinicaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('HistClinicaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.HistClinicaMenuItem_derivacion}" icon="ui-icon-search"  actionListener="#{histClinicaController.prepareDerivacion}" update=":ServiciosViewForm" oncomplete="ServiciosViewDialog.show()" disabled="#{empty histClinicaController.selected.derivacion}"/>  
+                <p:menuitem value="#{myBundle.HistClinicaMenuItem_dniPaciente}" icon="ui-icon-search"  actionListener="#{histClinicaController.prepareDniPaciente}" update=":PacienteViewForm" oncomplete="PacienteViewDialog.show()" disabled="#{empty histClinicaController.selected.dniPaciente}"/>  
+                <p:menuitem value="#{myBundle.HistClinicaMenuItem_codDiagnostico}" icon="ui-icon-search"  actionListener="#{histClinicaController.prepareCodDiagnostico}" update=":DiagnosticosViewForm" oncomplete="DiagnosticosViewDialog.show()" disabled="#{empty histClinicaController.selected.codDiagnostico}"/>  
+                <p:menuitem value="#{myBundle.HistClinicaMenuItem_medicosMatriculaMed}" icon="ui-icon-search"  actionListener="#{histClinicaController.prepareMedicosMatriculaMed}" update=":MedicosViewForm" oncomplete="MedicosViewDialog.show()" disabled="#{empty histClinicaController.selected.medicosMatriculaMed}"/>  
+                <p:menuitem value="#{myBundle.HistClinicaMenuItem_codPatologia}" icon="ui-icon-search"  actionListener="#{histClinicaController.prepareCodPatologia}" update=":PatologiasViewForm" oncomplete="PatologiasViewDialog.show()" disabled="#{empty histClinicaController.selected.codPatologia}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{histClinicaController.items}"
+                         var="item"
+                         rowKey="#{item.numHisClin}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{histClinicaController.selected}">
+
+                <p:ajax event="rowSelect"   update=":HistClinicaListForm:createButton :HistClinicaListForm:viewButton :HistClinicaListForm:editButton :HistClinicaListForm:deleteButton :HistClinicaListForm:HistClinicaDataTableContextMenu" listener="#{histClinicaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":HistClinicaListForm:createButton :HistClinicaListForm:viewButton :HistClinicaListForm:editButton :HistClinicaListForm:deleteButton :HistClinicaListForm:HistClinicaDataTableContextMenu" listener="#{histClinicaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('HistClinicaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.numHisClin}" filterBy="#{item.numHisClin}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHistClinicaTitle_numHisClin}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numHisClin}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHistClinicaTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.peso}" filterBy="#{item.peso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHistClinicaTitle_peso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.peso}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.talla}" filterBy="#{item.talla}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHistClinicaTitle_talla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.talla}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.derivacion.codIdServ}" filterBy="#{item.derivacion.codIdServ}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHistClinicaTitle_derivacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.derivacion.codIdServ}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dniPaciente.DNIPac}" filterBy="#{item.dniPaciente.DNIPac}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHistClinicaTitle_dniPaciente}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dniPaciente.DNIPac}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.codDiagnostico.codDiagnostico}" filterBy="#{item.codDiagnostico.codDiagnostico}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListHistClinicaTitle_codDiagnostico}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codDiagnostico.codDiagnostico}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.medicosMatriculaMed.matriculaMed}" filterBy="#{item.medicosMatriculaMed.matriculaMed}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListHistClinicaTitle_medicosMatriculaMed}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.medicosMatriculaMed.matriculaMed}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.codPatologia.codPatologia}" filterBy="#{item.codPatologia.codPatologia}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListHistClinicaTitle_codPatologia}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codPatologia.codPatologia}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{histClinicaController.prepareCreate}" update=":HistClinicaCreateForm" oncomplete="HistClinicaCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":HistClinicaViewForm" oncomplete="HistClinicaViewDialog.show()" disabled="#{empty histClinicaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":HistClinicaEditForm" oncomplete="HistClinicaEditDialog.show()" disabled="#{empty histClinicaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{histClinicaController.delete}" update=":growl,datalist" disabled="#{empty histClinicaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

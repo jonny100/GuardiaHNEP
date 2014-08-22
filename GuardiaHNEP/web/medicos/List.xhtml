@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="MedicosListForm">
+
+        <p:panel header="#{myBundle.ListMedicosTitle}">
+            <p:contextMenu id="MedicosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('MedicosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('MedicosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('MedicosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('MedicosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.MedicosMenuItem_guardiasDiariasCollection}" icon="ui-icon-search"  action="#{medicosController.navigateGuardiasDiariasCollection}" disabled="#{empty medicosController.selected.guardiasDiariasCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.MedicosMenuItem_cargoCollection}" icon="ui-icon-search"  action="#{medicosController.navigateCargoCollection}" disabled="#{empty medicosController.selected.cargoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.MedicosMenuItem_guardiasDiariasCollection1}" icon="ui-icon-search"  action="#{medicosController.navigateGuardiasDiariasCollection1}" disabled="#{empty medicosController.selected.guardiasDiariasCollection1}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.MedicosMenuItem_histClinicaCollection}" icon="ui-icon-search"  action="#{medicosController.navigateHistClinicaCollection}" disabled="#{empty medicosController.selected.histClinicaCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.MedicosMenuItem_especialidadCodIdEsp}" icon="ui-icon-search"  actionListener="#{medicosController.prepareEspecialidadCodIdEsp}" update=":EspecialidadViewForm" oncomplete="EspecialidadViewDialog.show()" disabled="#{empty medicosController.selected.especialidadCodIdEsp}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{medicosController.items}"
+                         var="item"
+                         rowKey="#{item.matriculaMed}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{medicosController.selected}">
+
+                <p:ajax event="rowSelect"   update=":MedicosListForm:createButton :MedicosListForm:viewButton :MedicosListForm:editButton :MedicosListForm:deleteButton :MedicosListForm:MedicosDataTableContextMenu" listener="#{medicosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":MedicosListForm:createButton :MedicosListForm:viewButton :MedicosListForm:editButton :MedicosListForm:deleteButton :MedicosListForm:MedicosDataTableContextMenu" listener="#{medicosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('MedicosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.matriculaMed}" filterBy="#{item.matriculaMed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicosTitle_matriculaMed}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.matriculaMed}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dniMed}" filterBy="#{item.dniMed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicosTitle_dniMed}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dniMed}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellidoMed}" filterBy="#{item.apellidoMed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicosTitle_apellidoMed}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidoMed}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreMed}" filterBy="#{item.nombreMed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicosTitle_nombreMed}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreMed}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccionMed}" filterBy="#{item.direccionMed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicosTitle_direccionMed}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccionMed}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telMed}" filterBy="#{item.telMed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicosTitle_telMed}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telMed}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.especialidadCodIdEsp.codIdEsp}" filterBy="#{item.especialidadCodIdEsp.codIdEsp}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMedicosTitle_especialidadCodIdEsp}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.especialidadCodIdEsp.codIdEsp}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{medicosController.prepareCreate}" update=":MedicosCreateForm" oncomplete="MedicosCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":MedicosViewForm" oncomplete="MedicosViewDialog.show()" disabled="#{empty medicosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":MedicosEditForm" oncomplete="MedicosEditDialog.show()" disabled="#{empty medicosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{medicosController.delete}" update=":growl,datalist" disabled="#{empty medicosController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

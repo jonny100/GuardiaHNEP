@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DiasListForm">
+
+        <p:panel header="#{myBundle.ListDiasTitle}">
+            <p:contextMenu id="DiasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('DiasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DiasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DiasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DiasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.DiasMenuItem_guardiasDiariasCollection}" icon="ui-icon-search"  action="#{diasController.navigateGuardiasDiariasCollection}" disabled="#{empty diasController.selected.guardiasDiariasCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{diasController.items}"
+                         var="item"
+                         rowKey="#{item.iddias}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{diasController.selected}">
+
+                <p:ajax event="rowSelect"   update=":DiasListForm:createButton :DiasListForm:viewButton :DiasListForm:editButton :DiasListForm:deleteButton :DiasListForm:DiasDataTableContextMenu" listener="#{diasController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":DiasListForm:createButton :DiasListForm:viewButton :DiasListForm:editButton :DiasListForm:deleteButton :DiasListForm:DiasDataTableContextMenu" listener="#{diasController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DiasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.iddias}" filterBy="#{item.iddias}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDiasTitle_iddias}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.iddias}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDiasTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{diasController.prepareCreate}" update=":DiasCreateForm" oncomplete="DiasCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":DiasViewForm" oncomplete="DiasViewDialog.show()" disabled="#{empty diasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DiasEditForm" oncomplete="DiasEditDialog.show()" disabled="#{empty diasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{diasController.delete}" update=":growl,datalist" disabled="#{empty diasController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

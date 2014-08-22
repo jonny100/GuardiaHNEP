@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ObraSocialPorPacienteEditDlg" widgetVar="ObraSocialPorPacienteEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditObraSocialPorPacienteTitle}" closeOnEscape="true">
+
+            <h:form id="ObraSocialPorPacienteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{obraSocialPorPacienteController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditObraSocialPorPacienteLabel_numeroAfiliado}" for="numeroAfiliado" />
+                        <p:inputText id="numeroAfiliado" value="#{obraSocialPorPacienteController.selected.numeroAfiliado}" title="#{myBundle.EditObraSocialPorPacienteTitle_numeroAfiliado}" required="true" requiredMessage="#{myBundle.EditObraSocialPorPacienteRequiredMessage_numeroAfiliado}"/>
+
+
+                        <h:outputLabel value="#{myBundle.EditObraSocialPorPacienteLabel_obraSocial}" for="obraSocial" />
+                        <h:outputText id="obraSocial" value="#{obraSocialPorPacienteController.selected.obraSocial}" />
+
+
+                        <h:outputLabel value="#{myBundle.EditObraSocialPorPacienteLabel_paciente}" for="paciente" />
+                        <h:outputText id="paciente" value="#{obraSocialPorPacienteController.selected.paciente}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{obraSocialPorPacienteController.save}" value="#{myBundle.Save}" update="display,:ObraSocialPorPacienteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ObraSocialPorPacienteEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ObraSocialPorPacienteEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PatologiasViewDlg" widgetVar="PatologiasViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPatologiasTitle}" closeOnEscape="true">
+
+            <h:form id="PatologiasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{patologiasController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPatologiasLabel_codPatologia}"/>
+                        <h:outputText value="#{patologiasController.selected.codPatologia}" title="#{myBundle.ViewPatologiasTitle_codPatologia}"/>
+
+                        <h:outputText value="#{myBundle.ViewPatologiasLabel_nomPatologia}"/>
+                        <h:outputText value="#{patologiasController.selected.nomPatologia}" title="#{myBundle.ViewPatologiasTitle_nomPatologia}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PatologiasViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

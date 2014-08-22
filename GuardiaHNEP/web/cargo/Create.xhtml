@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CargoCreateDlg" widgetVar="CargoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCargoTitle}" closeOnEscape="true">
+
+            <h:form id="CargoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{cargoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCargoLabel_codIdCargo}" for="codIdCargo" />
+                        <p:inputText id="codIdCargo" value="#{cargoController.selected.codIdCargo}" title="#{myBundle.CreateCargoTitle_codIdCargo}" required="true" requiredMessage="#{myBundle.CreateCargoRequiredMessage_codIdCargo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoLabel_nombreCargo}" for="nombreCargo" />
+                        <p:inputText id="nombreCargo" value="#{cargoController.selected.nombreCargo}" title="#{myBundle.CreateCargoTitle_nombreCargo}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCargoLabel_medicosCollection}" for="medicosCollection" />
+                        <p:selectManyMenu id="medicosCollection" value="#{cargoController.selected.medicosCollection}"  converter="medicosConverter">
+                            <f:selectItems value="#{medicosController.items}"
+                                           var="medicosCollectionItem"
+                                           itemValue="#{medicosCollectionItem}"
+                                           itemLabel="#{medicosCollectionItem.matriculaMed.toString()}"
+                                           />
+
+                        </p:selectManyMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cargoController.saveNew}" value="#{myBundle.Save}" update="display,:CargoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CargoCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="CargoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

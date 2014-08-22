@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TutorEditDlg" widgetVar="TutorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTutorTitle}" closeOnEscape="true">
+
+            <h:form id="TutorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tutorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTutorLabel_DNITut}" for="DNITut" />
+                        <h:outputText id="DNITut" value="#{tutorController.selected.DNITut}" />
+
+                        <p:outputLabel value="#{myBundle.EditTutorLabel_apellidoTut}" for="apellidoTut" />
+                        <p:inputText id="apellidoTut" value="#{tutorController.selected.apellidoTut}" title="#{myBundle.EditTutorTitle_apellidoTut}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditTutorLabel_nombreTut}" for="nombreTut" />
+                        <p:inputText id="nombreTut" value="#{tutorController.selected.nombreTut}" title="#{myBundle.EditTutorTitle_nombreTut}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditTutorLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{tutorController.selected.telefono}" title="#{myBundle.EditTutorTitle_telefono}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTutorLabel_familiaridad}" for="familiaridad" />
+                        <p:inputText id="familiaridad" value="#{tutorController.selected.familiaridad}" title="#{myBundle.EditTutorTitle_familiaridad}" required="true" requiredMessage="#{myBundle.EditTutorRequiredMessage_familiaridad}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tutorController.save}" value="#{myBundle.Save}" update="display,:TutorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TutorEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="TutorEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

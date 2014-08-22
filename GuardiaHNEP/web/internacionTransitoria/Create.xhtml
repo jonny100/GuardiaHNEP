@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InternacionTransitoriaCreateDlg" widgetVar="InternacionTransitoriaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateInternacionTransitoriaTitle}" closeOnEscape="true">
+
+            <h:form id="InternacionTransitoriaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{internacionTransitoriaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateInternacionTransitoriaLabel_numIntern}" for="numIntern" />
+                        <p:inputText id="numIntern" value="#{internacionTransitoriaController.selected.numIntern}" title="#{myBundle.CreateInternacionTransitoriaTitle_numIntern}" required="true" requiredMessage="#{myBundle.CreateInternacionTransitoriaRequiredMessage_numIntern}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInternacionTransitoriaLabel_fechaIngreso}" for="fechaIngreso" />
+                        <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{internacionTransitoriaController.selected.fechaIngreso}" title="#{myBundle.CreateInternacionTransitoriaTitle_fechaIngreso}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInternacionTransitoriaLabel_fechaAlta}" for="fechaAlta" />
+                        <p:calendar id="fechaAlta" pattern="MM/dd/yyyy" value="#{internacionTransitoriaController.selected.fechaAlta}" title="#{myBundle.CreateInternacionTransitoriaTitle_fechaAlta}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInternacionTransitoriaLabel_motivoAlta}" for="motivoAlta" />
+                        <p:inputText id="motivoAlta" value="#{internacionTransitoriaController.selected.motivoAlta}" title="#{myBundle.CreateInternacionTransitoriaTitle_motivoAlta}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInternacionTransitoriaLabel_traslado}" for="traslado" />
+                        <p:inputText id="traslado" value="#{internacionTransitoriaController.selected.traslado}" title="#{myBundle.CreateInternacionTransitoriaTitle_traslado}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateInternacionTransitoriaLabel_dniPac}" for="dniPac" />
+                        <p:selectOneMenu id="dniPac" value="#{internacionTransitoriaController.selected.dniPac}" required="true" requiredMessage="#{myBundle.CreateInternacionTransitoriaRequiredMessage_dniPac}" converter="pacienteConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{pacienteController.items}"
+                                           var="dniPacItem"
+                                           itemValue="#{dniPacItem}"
+                                           itemLabel="#{dniPacItem.DNIPac.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{internacionTransitoriaController.saveNew}" value="#{myBundle.Save}" update="display,:InternacionTransitoriaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,InternacionTransitoriaCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="InternacionTransitoriaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

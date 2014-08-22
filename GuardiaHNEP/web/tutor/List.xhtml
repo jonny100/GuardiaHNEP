@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TutorListForm">
+
+        <p:panel header="#{myBundle.ListTutorTitle}">
+            <p:contextMenu id="TutorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TutorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TutorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TutorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TutorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TutorMenuItem_pacienteCollection}" icon="ui-icon-search"  action="#{tutorController.navigatePacienteCollection}" disabled="#{empty tutorController.selected.pacienteCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tutorController.items}"
+                         var="item"
+                         rowKey="#{item.DNITut}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tutorController.selected}">
+
+                <p:ajax event="rowSelect"   update=":TutorListForm:createButton :TutorListForm:viewButton :TutorListForm:editButton :TutorListForm:deleteButton :TutorListForm:TutorDataTableContextMenu" listener="#{tutorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":TutorListForm:createButton :TutorListForm:viewButton :TutorListForm:editButton :TutorListForm:deleteButton :TutorListForm:TutorDataTableContextMenu" listener="#{tutorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TutorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.DNITut}" filterBy="#{item.DNITut}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTutorTitle_DNITut}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.DNITut}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellidoTut}" filterBy="#{item.apellidoTut}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTutorTitle_apellidoTut}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidoTut}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreTut}" filterBy="#{item.nombreTut}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTutorTitle_nombreTut}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreTut}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTutorTitle_telefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefono}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.familiaridad}" filterBy="#{item.familiaridad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTutorTitle_familiaridad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.familiaridad}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tutorController.prepareCreate}" update=":TutorCreateForm" oncomplete="TutorCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TutorViewForm" oncomplete="TutorViewDialog.show()" disabled="#{empty tutorController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TutorEditForm" oncomplete="TutorEditDialog.show()" disabled="#{empty tutorController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tutorController.delete}" update=":growl,datalist" disabled="#{empty tutorController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

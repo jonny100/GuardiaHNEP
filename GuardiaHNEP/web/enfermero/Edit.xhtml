@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EnfermeroEditDlg" widgetVar="EnfermeroEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEnfermeroTitle}" closeOnEscape="true">
+
+            <h:form id="EnfermeroEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{enfermeroController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEnfermeroLabel_dniEnferm}" for="dniEnferm" />
+                        <h:outputText id="dniEnferm" value="#{enfermeroController.selected.dniEnferm}" />
+
+                        <p:outputLabel value="#{myBundle.EditEnfermeroLabel_apellEnferm}" for="apellEnferm" />
+                        <p:inputText id="apellEnferm" value="#{enfermeroController.selected.apellEnferm}" title="#{myBundle.EditEnfermeroTitle_apellEnferm}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditEnfermeroLabel_nombreEnfer}" for="nombreEnfer" />
+                        <p:inputText id="nombreEnfer" value="#{enfermeroController.selected.nombreEnfer}" title="#{myBundle.EditEnfermeroTitle_nombreEnfer}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditEnfermeroLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{enfermeroController.selected.direccion}" title="#{myBundle.EditEnfermeroTitle_direccion}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditEnfermeroLabel_telEnfer}" for="telEnfer" />
+                        <p:inputText id="telEnfer" value="#{enfermeroController.selected.telEnfer}" title="#{myBundle.EditEnfermeroTitle_telEnfer}"/>
+
+                        <p:outputLabel value="#{myBundle.EditEnfermeroLabel_guardiasDiariasCollection}" for="guardiasDiariasCollection" />
+                        <p:selectManyMenu id="guardiasDiariasCollection" value="#{enfermeroController.selected.guardiasDiariasCollection}"  converter="guardiasDiariasConverter">
+                            <f:selectItems value="#{guardiasDiariasController.items}"
+                                           var="guardiasDiariasCollectionItem"
+                                           itemValue="#{guardiasDiariasCollectionItem}"
+                                           itemLabel="#{guardiasDiariasCollectionItem.idGuardiasDiarias.toString()}"
+                                           />
+
+                        </p:selectManyMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{enfermeroController.save}" value="#{myBundle.Save}" update="display,:EnfermeroListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EnfermeroEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EnfermeroEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

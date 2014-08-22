@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EnfermeroListForm">
+
+        <p:panel header="#{myBundle.ListEnfermeroTitle}">
+            <p:contextMenu id="EnfermeroDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EnfermeroListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EnfermeroListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EnfermeroListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EnfermeroListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EnfermeroMenuItem_guardiasDiariasCollection}" icon="ui-icon-search"  action="#{enfermeroController.navigateGuardiasDiariasCollection}" disabled="#{empty enfermeroController.selected.guardiasDiariasCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.EnfermeroMenuItem_administrarMedicamentosCollection}" icon="ui-icon-search"  action="#{enfermeroController.navigateAdministrarMedicamentosCollection}" disabled="#{empty enfermeroController.selected.administrarMedicamentosCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{enfermeroController.items}"
+                         var="item"
+                         rowKey="#{item.dniEnferm}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{enfermeroController.selected}">
+
+                <p:ajax event="rowSelect"   update=":EnfermeroListForm:createButton :EnfermeroListForm:viewButton :EnfermeroListForm:editButton :EnfermeroListForm:deleteButton :EnfermeroListForm:EnfermeroDataTableContextMenu" listener="#{enfermeroController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EnfermeroListForm:createButton :EnfermeroListForm:viewButton :EnfermeroListForm:editButton :EnfermeroListForm:deleteButton :EnfermeroListForm:EnfermeroDataTableContextMenu" listener="#{enfermeroController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EnfermeroListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.dniEnferm}" filterBy="#{item.dniEnferm}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEnfermeroTitle_dniEnferm}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dniEnferm}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.apellEnferm}" filterBy="#{item.apellEnferm}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEnfermeroTitle_apellEnferm}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellEnferm}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreEnfer}" filterBy="#{item.nombreEnfer}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEnfermeroTitle_nombreEnfer}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreEnfer}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEnfermeroTitle_direccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telEnfer}" filterBy="#{item.telEnfer}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEnfermeroTitle_telEnfer}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telEnfer}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{enfermeroController.prepareCreate}" update=":EnfermeroCreateForm" oncomplete="EnfermeroCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EnfermeroViewForm" oncomplete="EnfermeroViewDialog.show()" disabled="#{empty enfermeroController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EnfermeroEditForm" oncomplete="EnfermeroEditDialog.show()" disabled="#{empty enfermeroController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{enfermeroController.delete}" update=":growl,datalist" disabled="#{empty enfermeroController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

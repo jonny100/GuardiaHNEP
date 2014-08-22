@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EnfermeroViewDlg" widgetVar="EnfermeroViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEnfermeroTitle}" closeOnEscape="true">
+
+            <h:form id="EnfermeroViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{enfermeroController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEnfermeroLabel_dniEnferm}"/>
+                        <h:outputText value="#{enfermeroController.selected.dniEnferm}" title="#{myBundle.ViewEnfermeroTitle_dniEnferm}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnfermeroLabel_apellEnferm}"/>
+                        <h:outputText value="#{enfermeroController.selected.apellEnferm}" title="#{myBundle.ViewEnfermeroTitle_apellEnferm}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnfermeroLabel_nombreEnfer}"/>
+                        <h:outputText value="#{enfermeroController.selected.nombreEnfer}" title="#{myBundle.ViewEnfermeroTitle_nombreEnfer}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnfermeroLabel_direccion}"/>
+                        <h:outputText value="#{enfermeroController.selected.direccion}" title="#{myBundle.ViewEnfermeroTitle_direccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnfermeroLabel_telEnfer}"/>
+                        <h:outputText value="#{enfermeroController.selected.telEnfer}" title="#{myBundle.ViewEnfermeroTitle_telEnfer}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnfermeroLabel_guardiasDiariasCollection}"/>
+                        <h:selectManyMenu converter="guardiasDiariasConverter">
+                            <f:selectItems value="#{enfermeroController.selected.guardiasDiariasCollection}"
+                                           var="guardiasDiariasCollectionItem"
+                                           itemValue="#{guardiasDiariasCollectionItem}"
+                                           itemLabel="#{guardiasDiariasCollectionItem.idGuardiasDiarias.toString()}"
+                                           />
+
+                        </h:selectManyMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="EnfermeroViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

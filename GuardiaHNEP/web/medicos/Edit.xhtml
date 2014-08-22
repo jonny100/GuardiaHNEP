@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="MedicosEditDlg" widgetVar="MedicosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditMedicosTitle}" closeOnEscape="true">
+
+            <h:form id="MedicosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{medicosController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditMedicosLabel_matriculaMed}" for="matriculaMed" />
+                        <h:outputText id="matriculaMed" value="#{medicosController.selected.matriculaMed}" />
+
+                        <p:outputLabel value="#{myBundle.EditMedicosLabel_dniMed}" for="dniMed" />
+                        <p:inputText id="dniMed" value="#{medicosController.selected.dniMed}" title="#{myBundle.EditMedicosTitle_dniMed}"/>
+
+                        <p:outputLabel value="#{myBundle.EditMedicosLabel_apellidoMed}" for="apellidoMed" />
+                        <p:inputText id="apellidoMed" value="#{medicosController.selected.apellidoMed}" title="#{myBundle.EditMedicosTitle_apellidoMed}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditMedicosLabel_nombreMed}" for="nombreMed" />
+                        <p:inputText id="nombreMed" value="#{medicosController.selected.nombreMed}" title="#{myBundle.EditMedicosTitle_nombreMed}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditMedicosLabel_direccionMed}" for="direccionMed" />
+                        <p:inputText id="direccionMed" value="#{medicosController.selected.direccionMed}" title="#{myBundle.EditMedicosTitle_direccionMed}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditMedicosLabel_telMed}" for="telMed" />
+                        <p:inputText id="telMed" value="#{medicosController.selected.telMed}" title="#{myBundle.EditMedicosTitle_telMed}"/>
+
+                        <p:outputLabel value="#{myBundle.EditMedicosLabel_especialidadCodIdEsp}" for="especialidadCodIdEsp" />
+                        <p:selectOneMenu id="especialidadCodIdEsp" value="#{medicosController.selected.especialidadCodIdEsp}" required="true" requiredMessage="#{myBundle.EditMedicosRequiredMessage_especialidadCodIdEsp}" converter="especialidadConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{especialidadController.items}"
+                                           var="especialidadCodIdEspItem"
+                                           itemValue="#{especialidadCodIdEspItem}"
+                                           itemLabel="#{especialidadCodIdEspItem.codIdEsp.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicosController.save}" value="#{myBundle.Save}" update="display,:MedicosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MedicosEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="MedicosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

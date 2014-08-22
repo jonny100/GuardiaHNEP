@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicamentosCreateDlg" widgetVar="MedicamentosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateMedicamentosTitle}" closeOnEscape="true">
+
+            <h:form id="MedicamentosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{medicamentosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateMedicamentosLabel_codIdMedicamento}" for="codIdMedicamento" />
+                        <p:inputText id="codIdMedicamento" value="#{medicamentosController.selected.codIdMedicamento}" title="#{myBundle.CreateMedicamentosTitle_codIdMedicamento}" required="true" requiredMessage="#{myBundle.CreateMedicamentosRequiredMessage_codIdMedicamento}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicamentosLabel_nombreMedicamento}" for="nombreMedicamento" />
+                        <p:inputText id="nombreMedicamento" value="#{medicamentosController.selected.nombreMedicamento}" title="#{myBundle.CreateMedicamentosTitle_nombreMedicamento}" required="true" requiredMessage="#{myBundle.CreateMedicamentosRequiredMessage_nombreMedicamento}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicamentosLabel_stockMedicamentos}" for="stockMedicamentos" />
+                        <p:inputText id="stockMedicamentos" value="#{medicamentosController.selected.stockMedicamentos}" title="#{myBundle.CreateMedicamentosTitle_stockMedicamentos}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMedicamentosLabel_presentacionTipo}" for="presentacionTipo" />
+                        <p:inputText id="presentacionTipo" value="#{medicamentosController.selected.presentacionTipo}" title="#{myBundle.CreateMedicamentosTitle_presentacionTipo}" size="20" maxlength="20"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicamentosController.saveNew}" value="#{myBundle.Save}" update="display,:MedicamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MedicamentosCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="MedicamentosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

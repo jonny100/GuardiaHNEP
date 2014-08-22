@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ObraSocialPorPacienteCreateDlg" widgetVar="ObraSocialPorPacienteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateObraSocialPorPacienteTitle}" closeOnEscape="true">
+
+            <h:form id="ObraSocialPorPacienteCreateForm">
+
+                <h:panelGroup id="display" rendered="#{obraSocialPorPacienteController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateObraSocialPorPacienteLabel_numeroAfiliado}" for="numeroAfiliado" />
+                        <p:inputText id="numeroAfiliado" value="#{obraSocialPorPacienteController.selected.numeroAfiliado}" title="#{myBundle.CreateObraSocialPorPacienteTitle_numeroAfiliado}" required="true" requiredMessage="#{myBundle.CreateObraSocialPorPacienteRequiredMessage_numeroAfiliado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateObraSocialPorPacienteLabel_obraSocial}" for="obraSocial" />
+                        <p:selectOneMenu id="obraSocial" value="#{obraSocialPorPacienteController.selected.obraSocial}" required="true" requiredMessage="#{myBundle.CreateObraSocialPorPacienteRequiredMessage_obraSocial}" converter="obraSocialConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{obraSocialController.items}"
+                                           var="obraSocialItem"
+                                           itemValue="#{obraSocialItem}"
+                                           itemLabel="#{obraSocialItem.codIdObraSocial.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateObraSocialPorPacienteLabel_paciente}" for="paciente" />
+                        <p:selectOneMenu id="paciente" value="#{obraSocialPorPacienteController.selected.paciente}" required="true" requiredMessage="#{myBundle.CreateObraSocialPorPacienteRequiredMessage_paciente}" converter="pacienteConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{pacienteController.items}"
+                                           var="pacienteItem"
+                                           itemValue="#{pacienteItem}"
+                                           itemLabel="#{pacienteItem.DNIPac.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{obraSocialPorPacienteController.saveNew}" value="#{myBundle.Save}" update="display,:ObraSocialPorPacienteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ObraSocialPorPacienteCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ObraSocialPorPacienteCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

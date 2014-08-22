@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="InternacionTransitoriaListForm">
+
+        <p:panel header="#{myBundle.ListInternacionTransitoriaTitle}">
+            <p:contextMenu id="InternacionTransitoriaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('InternacionTransitoriaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('InternacionTransitoriaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('InternacionTransitoriaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('InternacionTransitoriaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.InternacionTransitoriaMenuItem_camasCollection}" icon="ui-icon-search"  action="#{internacionTransitoriaController.navigateCamasCollection}" disabled="#{empty internacionTransitoriaController.selected.camasCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.InternacionTransitoriaMenuItem_dniPac}" icon="ui-icon-search"  actionListener="#{internacionTransitoriaController.prepareDniPac}" update=":PacienteViewForm" oncomplete="PacienteViewDialog.show()" disabled="#{empty internacionTransitoriaController.selected.dniPac}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{internacionTransitoriaController.items}"
+                         var="item"
+                         rowKey="#{item.numIntern}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{internacionTransitoriaController.selected}">
+
+                <p:ajax event="rowSelect"   update=":InternacionTransitoriaListForm:createButton :InternacionTransitoriaListForm:viewButton :InternacionTransitoriaListForm:editButton :InternacionTransitoriaListForm:deleteButton :InternacionTransitoriaListForm:InternacionTransitoriaDataTableContextMenu" listener="#{internacionTransitoriaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":InternacionTransitoriaListForm:createButton :InternacionTransitoriaListForm:viewButton :InternacionTransitoriaListForm:editButton :InternacionTransitoriaListForm:deleteButton :InternacionTransitoriaListForm:InternacionTransitoriaDataTableContextMenu" listener="#{internacionTransitoriaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('InternacionTransitoriaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.numIntern}" filterBy="#{item.numIntern}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInternacionTransitoriaTitle_numIntern}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numIntern}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInternacionTransitoriaTitle_fechaIngreso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaIngreso}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaAlta}" filterBy="#{item.fechaAlta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInternacionTransitoriaTitle_fechaAlta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaAlta}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.motivoAlta}" filterBy="#{item.motivoAlta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInternacionTransitoriaTitle_motivoAlta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.motivoAlta}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.traslado}" filterBy="#{item.traslado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInternacionTransitoriaTitle_traslado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.traslado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dniPac.DNIPac}" filterBy="#{item.dniPac.DNIPac}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInternacionTransitoriaTitle_dniPac}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dniPac.DNIPac}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{internacionTransitoriaController.prepareCreate}" update=":InternacionTransitoriaCreateForm" oncomplete="InternacionTransitoriaCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":InternacionTransitoriaViewForm" oncomplete="InternacionTransitoriaViewDialog.show()" disabled="#{empty internacionTransitoriaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":InternacionTransitoriaEditForm" oncomplete="InternacionTransitoriaEditDialog.show()" disabled="#{empty internacionTransitoriaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{internacionTransitoriaController.delete}" update=":growl,datalist" disabled="#{empty internacionTransitoriaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

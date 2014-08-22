@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PacienteViewDlg" widgetVar="PacienteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPacienteTitle}" closeOnEscape="true">
+
+            <h:form id="PacienteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{pacienteController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPacienteLabel_DNIPac}"/>
+                        <h:outputText value="#{pacienteController.selected.DNIPac}" title="#{myBundle.ViewPacienteTitle_DNIPac}"/>
+
+                        <h:outputText value="#{myBundle.ViewPacienteLabel_apellidoPac}"/>
+                        <h:outputText value="#{pacienteController.selected.apellidoPac}" title="#{myBundle.ViewPacienteTitle_apellidoPac}"/>
+
+                        <h:outputText value="#{myBundle.ViewPacienteLabel_nombrePac}"/>
+                        <h:outputText value="#{pacienteController.selected.nombrePac}" title="#{myBundle.ViewPacienteTitle_nombrePac}"/>
+
+                        <h:outputText value="#{myBundle.ViewPacienteLabel_domicilio}"/>
+                        <h:outputText value="#{pacienteController.selected.domicilio}" title="#{myBundle.ViewPacienteTitle_domicilio}"/>
+
+                        <h:outputText value="#{myBundle.ViewPacienteLabel_localidad}"/>
+                        <h:outputText value="#{pacienteController.selected.localidad}" title="#{myBundle.ViewPacienteTitle_localidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewPacienteLabel_fechaNacPac}"/>
+                        <h:outputText value="#{pacienteController.selected.fechaNacPac}" title="#{myBundle.ViewPacienteTitle_fechaNacPac}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPacienteLabel_tutorDNITut}"/>
+                        <h:outputText value="#{pacienteController.selected.tutorDNITut.DNITut}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PacienteViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

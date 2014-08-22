@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PacienteEditDlg" widgetVar="PacienteEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPacienteTitle}" closeOnEscape="true">
+
+            <h:form id="PacienteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{pacienteController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPacienteLabel_DNIPac}" for="DNIPac" />
+                        <h:outputText id="DNIPac" value="#{pacienteController.selected.DNIPac}" />
+
+                        <p:outputLabel value="#{myBundle.EditPacienteLabel_apellidoPac}" for="apellidoPac" />
+                        <p:inputText id="apellidoPac" value="#{pacienteController.selected.apellidoPac}" title="#{myBundle.EditPacienteTitle_apellidoPac}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditPacienteLabel_nombrePac}" for="nombrePac" />
+                        <p:inputText id="nombrePac" value="#{pacienteController.selected.nombrePac}" title="#{myBundle.EditPacienteTitle_nombrePac}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditPacienteLabel_domicilio}" for="domicilio" />
+                        <p:inputText id="domicilio" value="#{pacienteController.selected.domicilio}" title="#{myBundle.EditPacienteTitle_domicilio}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.EditPacienteLabel_localidad}" for="localidad" />
+                        <p:inputText id="localidad" value="#{pacienteController.selected.localidad}" title="#{myBundle.EditPacienteTitle_localidad}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.EditPacienteLabel_fechaNacPac}" for="fechaNacPac" />
+                        <p:calendar id="fechaNacPac" pattern="MM/dd/yyyy" value="#{pacienteController.selected.fechaNacPac}" title="#{myBundle.EditPacienteTitle_fechaNacPac}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPacienteLabel_tutorDNITut}" for="tutorDNITut" />
+                        <p:selectOneMenu id="tutorDNITut" value="#{pacienteController.selected.tutorDNITut}" required="true" requiredMessage="#{myBundle.EditPacienteRequiredMessage_tutorDNITut}" converter="tutorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tutorController.items}"
+                                           var="tutorDNITutItem"
+                                           itemValue="#{tutorDNITutItem}"
+                                           itemLabel="#{tutorDNITutItem.DNITut.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pacienteController.save}" value="#{myBundle.Save}" update="display,:PacienteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PacienteEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PacienteEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

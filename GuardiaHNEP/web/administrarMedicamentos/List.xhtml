@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="AdministrarMedicamentosListForm">
+
+        <p:panel header="#{myBundle.ListAdministrarMedicamentosTitle}">
+            <p:contextMenu id="AdministrarMedicamentosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('AdministrarMedicamentosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('AdministrarMedicamentosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('AdministrarMedicamentosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('AdministrarMedicamentosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.AdministrarMedicamentosMenuItem_dniEnferm}" icon="ui-icon-search"  actionListener="#{administrarMedicamentosController.prepareDniEnferm}" update=":EnfermeroViewForm" oncomplete="EnfermeroViewDialog.show()" disabled="#{empty administrarMedicamentosController.selected.dniEnferm}"/>  
+                <p:menuitem value="#{myBundle.AdministrarMedicamentosMenuItem_paciente}" icon="ui-icon-search"  actionListener="#{administrarMedicamentosController.preparePaciente}" update=":PacienteViewForm" oncomplete="PacienteViewDialog.show()" disabled="#{empty administrarMedicamentosController.selected.paciente}"/>  
+                <p:menuitem value="#{myBundle.AdministrarMedicamentosMenuItem_medicamentos}" icon="ui-icon-search"  actionListener="#{administrarMedicamentosController.prepareMedicamentos}" update=":MedicamentosViewForm" oncomplete="MedicamentosViewDialog.show()" disabled="#{empty administrarMedicamentosController.selected.medicamentos}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{administrarMedicamentosController.items}"
+                         var="item"
+                         rowKey="#{item.administrarMedicamentosPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{administrarMedicamentosController.selected}">
+
+                <p:ajax event="rowSelect"   update=":AdministrarMedicamentosListForm:createButton :AdministrarMedicamentosListForm:viewButton :AdministrarMedicamentosListForm:editButton :AdministrarMedicamentosListForm:deleteButton :AdministrarMedicamentosListForm:AdministrarMedicamentosDataTableContextMenu" listener="#{administrarMedicamentosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":AdministrarMedicamentosListForm:createButton :AdministrarMedicamentosListForm:viewButton :AdministrarMedicamentosListForm:editButton :AdministrarMedicamentosListForm:deleteButton :AdministrarMedicamentosListForm:AdministrarMedicamentosDataTableContextMenu" listener="#{administrarMedicamentosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AdministrarMedicamentosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.dniEnferm.dniEnferm}" filterBy="#{item.dniEnferm.dniEnferm}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAdministrarMedicamentosTitle_dniEnferm}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dniEnferm.dniEnferm}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.paciente.DNIPac}" filterBy="#{item.paciente.DNIPac}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAdministrarMedicamentosTitle_paciente}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.paciente.DNIPac}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.medicamentos.codIdMedicamento}" filterBy="#{item.medicamentos.codIdMedicamento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAdministrarMedicamentosTitle_medicamentos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.medicamentos.codIdMedicamento}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{administrarMedicamentosController.prepareCreate}" update=":AdministrarMedicamentosCreateForm" oncomplete="AdministrarMedicamentosCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":AdministrarMedicamentosViewForm" oncomplete="AdministrarMedicamentosViewDialog.show()" disabled="#{empty administrarMedicamentosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":AdministrarMedicamentosEditForm" oncomplete="AdministrarMedicamentosEditDialog.show()" disabled="#{empty administrarMedicamentosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{administrarMedicamentosController.delete}" update=":growl,datalist" disabled="#{empty administrarMedicamentosController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

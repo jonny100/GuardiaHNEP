@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CargoListForm">
+
+        <p:panel header="#{myBundle.ListCargoTitle}">
+            <p:contextMenu id="CargoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CargoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CargoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CargoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CargoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CargoMenuItem_medicosCollection}" icon="ui-icon-search"  action="#{cargoController.navigateMedicosCollection}" disabled="#{empty cargoController.selected.medicosCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{cargoController.items}"
+                         var="item"
+                         rowKey="#{item.codIdCargo}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{cargoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":CargoListForm:createButton :CargoListForm:viewButton :CargoListForm:editButton :CargoListForm:deleteButton :CargoListForm:CargoDataTableContextMenu" listener="#{cargoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":CargoListForm:createButton :CargoListForm:viewButton :CargoListForm:editButton :CargoListForm:deleteButton :CargoListForm:CargoDataTableContextMenu" listener="#{cargoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CargoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.codIdCargo}" filterBy="#{item.codIdCargo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCargoTitle_codIdCargo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codIdCargo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreCargo}" filterBy="#{item.nombreCargo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCargoTitle_nombreCargo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreCargo}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{cargoController.prepareCreate}" update=":CargoCreateForm" oncomplete="CargoCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CargoViewForm" oncomplete="CargoViewDialog.show()" disabled="#{empty cargoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CargoEditForm" oncomplete="CargoEditDialog.show()" disabled="#{empty cargoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cargoController.delete}" update=":growl,datalist" disabled="#{empty cargoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

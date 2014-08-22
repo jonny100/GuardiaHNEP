@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="GuardiasDiariasListForm">
+
+        <p:panel header="#{myBundle.ListGuardiasDiariasTitle}">
+            <p:contextMenu id="GuardiasDiariasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('GuardiasDiariasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('GuardiasDiariasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('GuardiasDiariasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('GuardiasDiariasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.GuardiasDiariasMenuItem_medicosCollection}" icon="ui-icon-search"  action="#{guardiasDiariasController.navigateMedicosCollection}" disabled="#{empty guardiasDiariasController.selected.medicosCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.GuardiasDiariasMenuItem_enfermeroCollection}" icon="ui-icon-search"  action="#{guardiasDiariasController.navigateEnfermeroCollection}" disabled="#{empty guardiasDiariasController.selected.enfermeroCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.GuardiasDiariasMenuItem_diasIddias}" icon="ui-icon-search"  actionListener="#{guardiasDiariasController.prepareDiasIddias}" update=":DiasViewForm" oncomplete="DiasViewDialog.show()" disabled="#{empty guardiasDiariasController.selected.diasIddias}"/>  
+                <p:menuitem value="#{myBundle.GuardiasDiariasMenuItem_jefeServicio}" icon="ui-icon-search"  actionListener="#{guardiasDiariasController.prepareJefeServicio}" update=":MedicosViewForm" oncomplete="MedicosViewDialog.show()" disabled="#{empty guardiasDiariasController.selected.jefeServicio}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{guardiasDiariasController.items}"
+                         var="item"
+                         rowKey="#{item.idGuardiasDiarias}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{guardiasDiariasController.selected}">
+
+                <p:ajax event="rowSelect"   update=":GuardiasDiariasListForm:createButton :GuardiasDiariasListForm:viewButton :GuardiasDiariasListForm:editButton :GuardiasDiariasListForm:deleteButton :GuardiasDiariasListForm:GuardiasDiariasDataTableContextMenu" listener="#{guardiasDiariasController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":GuardiasDiariasListForm:createButton :GuardiasDiariasListForm:viewButton :GuardiasDiariasListForm:editButton :GuardiasDiariasListForm:deleteButton :GuardiasDiariasListForm:GuardiasDiariasDataTableContextMenu" listener="#{guardiasDiariasController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('GuardiasDiariasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idGuardiasDiarias}" filterBy="#{item.idGuardiasDiarias}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGuardiasDiariasTitle_idGuardiasDiarias}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idGuardiasDiarias}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horaInicio}" filterBy="#{item.horaInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGuardiasDiariasTitle_horaInicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horaInicio}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horaSalida}" filterBy="#{item.horaSalida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGuardiasDiariasTitle_horaSalida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horaSalida}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.diasIddias.descripcion}" filterBy="#{item.diasIddias.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGuardiasDiariasTitle_diasIddias}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.diasIddias.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.jefeServicio.matriculaMed}" filterBy="#{item.jefeServicio.matriculaMed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGuardiasDiariasTitle_jefeServicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.jefeServicio.apellidoMed} #{item.jefeServicio.nombreMed}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{guardiasDiariasController.prepareCreate}" update=":GuardiasDiariasCreateForm" oncomplete="GuardiasDiariasCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":GuardiasDiariasViewForm" oncomplete="GuardiasDiariasViewDialog.show()" disabled="#{empty guardiasDiariasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":GuardiasDiariasEditForm" oncomplete="GuardiasDiariasEditDialog.show()" disabled="#{empty guardiasDiariasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{guardiasDiariasController.delete}" update=":growl,datalist" disabled="#{empty guardiasDiariasController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

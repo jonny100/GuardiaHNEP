@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AdministrarMedicamentosEditDlg" widgetVar="AdministrarMedicamentosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditAdministrarMedicamentosTitle}" closeOnEscape="true">
+
+            <h:form id="AdministrarMedicamentosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{administrarMedicamentosController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditAdministrarMedicamentosLabel_dniEnferm}" for="dniEnferm" />
+                        <p:selectOneMenu id="dniEnferm" value="#{administrarMedicamentosController.selected.dniEnferm}" required="true" requiredMessage="#{myBundle.EditAdministrarMedicamentosRequiredMessage_dniEnferm}" converter="enfermeroConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{enfermeroController.items}"
+                                           var="dniEnfermItem"
+                                           itemValue="#{dniEnfermItem}"
+                                           itemLabel="#{dniEnfermItem.dniEnferm.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+
+                        <h:outputLabel value="#{myBundle.EditAdministrarMedicamentosLabel_paciente}" for="paciente" />
+                        <h:outputText id="paciente" value="#{administrarMedicamentosController.selected.paciente}" />
+
+
+                        <h:outputLabel value="#{myBundle.EditAdministrarMedicamentosLabel_medicamentos}" for="medicamentos" />
+                        <h:outputText id="medicamentos" value="#{administrarMedicamentosController.selected.medicamentos}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{administrarMedicamentosController.save}" value="#{myBundle.Save}" update="display,:AdministrarMedicamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AdministrarMedicamentosEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="AdministrarMedicamentosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

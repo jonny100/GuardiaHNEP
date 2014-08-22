@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HistClinicaCreateDlg" widgetVar="HistClinicaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateHistClinicaTitle}" closeOnEscape="true">
+
+            <h:form id="HistClinicaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{histClinicaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_numHisClin}" for="numHisClin" />
+                        <p:inputText id="numHisClin" value="#{histClinicaController.selected.numHisClin}" title="#{myBundle.CreateHistClinicaTitle_numHisClin}" required="true" requiredMessage="#{myBundle.CreateHistClinicaRequiredMessage_numHisClin}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{histClinicaController.selected.fecha}" title="#{myBundle.CreateHistClinicaTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateHistClinicaRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_peso}" for="peso" />
+                        <p:inputText id="peso" value="#{histClinicaController.selected.peso}" title="#{myBundle.CreateHistClinicaTitle_peso}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_talla}" for="talla" />
+                        <p:inputText id="talla" value="#{histClinicaController.selected.talla}" title="#{myBundle.CreateHistClinicaTitle_talla}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_derivacion}" for="derivacion" />
+                        <p:selectOneMenu id="derivacion" value="#{histClinicaController.selected.derivacion}" required="true" requiredMessage="#{myBundle.CreateHistClinicaRequiredMessage_derivacion}" converter="serviciosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{serviciosController.items}"
+                                           var="derivacionItem"
+                                           itemValue="#{derivacionItem}"
+                                           itemLabel="#{derivacionItem.codIdServ.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_dniPaciente}" for="dniPaciente" />
+                        <p:selectOneMenu id="dniPaciente" value="#{histClinicaController.selected.dniPaciente}" required="true" requiredMessage="#{myBundle.CreateHistClinicaRequiredMessage_dniPaciente}" converter="pacienteConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{pacienteController.items}"
+                                           var="dniPacienteItem"
+                                           itemValue="#{dniPacienteItem}"
+                                           itemLabel="#{dniPacienteItem.DNIPac.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_codDiagnostico}" for="codDiagnostico" />
+                        <p:selectOneMenu id="codDiagnostico" value="#{histClinicaController.selected.codDiagnostico}" required="true" requiredMessage="#{myBundle.CreateHistClinicaRequiredMessage_codDiagnostico}" converter="diagnosticosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{diagnosticosController.items}"
+                                           var="codDiagnosticoItem"
+                                           itemValue="#{codDiagnosticoItem}"
+                                           itemLabel="#{codDiagnosticoItem.codDiagnostico.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_medicosMatriculaMed}" for="medicosMatriculaMed" />
+                        <p:selectOneMenu id="medicosMatriculaMed" value="#{histClinicaController.selected.medicosMatriculaMed}" required="true" requiredMessage="#{myBundle.CreateHistClinicaRequiredMessage_medicosMatriculaMed}" converter="medicosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{medicosController.items}"
+                                           var="medicosMatriculaMedItem"
+                                           itemValue="#{medicosMatriculaMedItem}"
+                                           itemLabel="#{medicosMatriculaMedItem.matriculaMed.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateHistClinicaLabel_codPatologia}" for="codPatologia" />
+                        <p:selectOneMenu id="codPatologia" value="#{histClinicaController.selected.codPatologia}" required="true" requiredMessage="#{myBundle.CreateHistClinicaRequiredMessage_codPatologia}" converter="patologiasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{patologiasController.items}"
+                                           var="codPatologiaItem"
+                                           itemValue="#{codPatologiaItem}"
+                                           itemLabel="#{codPatologiaItem.codPatologia.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{histClinicaController.saveNew}" value="#{myBundle.Save}" update="display,:HistClinicaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,HistClinicaCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="HistClinicaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

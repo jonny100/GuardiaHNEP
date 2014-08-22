@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="MedicamentosListForm">
+
+        <p:panel header="#{myBundle.ListMedicamentosTitle}">
+            <p:contextMenu id="MedicamentosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('MedicamentosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('MedicamentosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('MedicamentosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('MedicamentosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.MedicamentosMenuItem_administrarMedicamentosCollection}" icon="ui-icon-search"  action="#{medicamentosController.navigateAdministrarMedicamentosCollection}" disabled="#{empty medicamentosController.selected.administrarMedicamentosCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{medicamentosController.items}"
+                         var="item"
+                         rowKey="#{item.codIdMedicamento}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{medicamentosController.selected}">
+
+                <p:ajax event="rowSelect"   update=":MedicamentosListForm:createButton :MedicamentosListForm:viewButton :MedicamentosListForm:editButton :MedicamentosListForm:deleteButton :MedicamentosListForm:MedicamentosDataTableContextMenu" listener="#{medicamentosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":MedicamentosListForm:createButton :MedicamentosListForm:viewButton :MedicamentosListForm:editButton :MedicamentosListForm:deleteButton :MedicamentosListForm:MedicamentosDataTableContextMenu" listener="#{medicamentosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('MedicamentosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.codIdMedicamento}" filterBy="#{item.codIdMedicamento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicamentosTitle_codIdMedicamento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codIdMedicamento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreMedicamento}" filterBy="#{item.nombreMedicamento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicamentosTitle_nombreMedicamento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreMedicamento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.stockMedicamentos}" filterBy="#{item.stockMedicamentos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicamentosTitle_stockMedicamentos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.stockMedicamentos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.presentacionTipo}" filterBy="#{item.presentacionTipo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMedicamentosTitle_presentacionTipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.presentacionTipo}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{medicamentosController.prepareCreate}" update=":MedicamentosCreateForm" oncomplete="MedicamentosCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":MedicamentosViewForm" oncomplete="MedicamentosViewDialog.show()" disabled="#{empty medicamentosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":MedicamentosEditForm" oncomplete="MedicamentosEditDialog.show()" disabled="#{empty medicamentosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{medicamentosController.delete}" update=":growl,datalist" disabled="#{empty medicamentosController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

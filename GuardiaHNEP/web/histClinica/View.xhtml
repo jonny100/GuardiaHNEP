@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HistClinicaViewDlg" widgetVar="HistClinicaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewHistClinicaTitle}" closeOnEscape="true">
+
+            <h:form id="HistClinicaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{histClinicaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_numHisClin}"/>
+                        <h:outputText value="#{histClinicaController.selected.numHisClin}" title="#{myBundle.ViewHistClinicaTitle_numHisClin}"/>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_fecha}"/>
+                        <h:outputText value="#{histClinicaController.selected.fecha}" title="#{myBundle.ViewHistClinicaTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_peso}"/>
+                        <h:outputText value="#{histClinicaController.selected.peso}" title="#{myBundle.ViewHistClinicaTitle_peso}"/>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_talla}"/>
+                        <h:outputText value="#{histClinicaController.selected.talla}" title="#{myBundle.ViewHistClinicaTitle_talla}"/>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_derivacion}"/>
+                        <h:outputText value="#{histClinicaController.selected.derivacion.codIdServ}"/>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_dniPaciente}"/>
+                        <h:outputText value="#{histClinicaController.selected.dniPaciente.DNIPac}"/>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_codDiagnostico}"/>
+                        <h:outputText value="#{histClinicaController.selected.codDiagnostico.codDiagnostico}"/>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_medicosMatriculaMed}"/>
+                        <h:outputText value="#{histClinicaController.selected.medicosMatriculaMed.matriculaMed}"/>
+
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_codPatologia}"/>
+                        <h:outputText value="#{histClinicaController.selected.codPatologia.codPatologia}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="HistClinicaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

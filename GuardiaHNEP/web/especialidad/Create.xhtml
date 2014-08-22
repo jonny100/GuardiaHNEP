@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EspecialidadCreateDlg" widgetVar="EspecialidadCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEspecialidadTitle}" closeOnEscape="true">
+
+            <h:form id="EspecialidadCreateForm">
+
+                <h:panelGroup id="display" rendered="#{especialidadController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEspecialidadLabel_codIdEsp}" for="codIdEsp" />
+                        <p:inputText id="codIdEsp" value="#{especialidadController.selected.codIdEsp}" title="#{myBundle.CreateEspecialidadTitle_codIdEsp}" required="true" requiredMessage="#{myBundle.CreateEspecialidadRequiredMessage_codIdEsp}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEspecialidadLabel_nombreEsp}" for="nombreEsp" />
+                        <p:inputText id="nombreEsp" value="#{especialidadController.selected.nombreEsp}" title="#{myBundle.CreateEspecialidadTitle_nombreEsp}" size="20" maxlength="20"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{especialidadController.saveNew}" value="#{myBundle.Save}" update="display,:EspecialidadListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EspecialidadCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EspecialidadCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
