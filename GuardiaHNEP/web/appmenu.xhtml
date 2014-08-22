@@ -10,25 +10,30 @@
         <h:form id="menuForm">
             <p:menubar>
                 <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
-                <p:submenu label="#{myBundle.Maintenance}">
-                    <p:menuitem value="#{myBundle.AdministrarMedicamentosHeading}..." outcome="/administrarMedicamentos/index" />
-                    <p:menuitem value="#{myBundle.CamasHeading}..." outcome="/camas/index" />
+                <p:submenu label="Pantel">
                     <p:menuitem value="#{myBundle.CargoHeading}..." outcome="/cargo/index" />
-                    <p:menuitem value="#{myBundle.DiagnosticosHeading}..." outcome="/diagnosticos/index" />
-                    <p:menuitem value="#{myBundle.DiasHeading}..." outcome="/dias/index" />
                     <p:menuitem value="#{myBundle.EnfermeroHeading}..." outcome="/enfermero/index" />
                     <p:menuitem value="#{myBundle.EspecialidadHeading}..." outcome="/especialidad/index" />
-                    <p:menuitem value="#{myBundle.GuardiasDiariasHeading}..." outcome="/guardiasDiarias/index" />
-                    <p:menuitem value="#{myBundle.HistClinicaHeading}..." outcome="/histClinica/index" />
-                    <p:menuitem value="#{myBundle.InternacionTransitoriaHeading}..." outcome="/internacionTransitoria/index" />
-                    <p:menuitem value="#{myBundle.MedicamentosHeading}..." outcome="/medicamentos/index" />
                     <p:menuitem value="#{myBundle.MedicosHeading}..." outcome="/medicos/index" />
+                </p:submenu>
+                <p:submenu label="Ingreso">
+                    <p:menuitem value="#{myBundle.CamasHeading}..." outcome="/camas/index" />
                     <p:menuitem value="#{myBundle.ObraSocialHeading}..." outcome="/obraSocial/index" />
                     <p:menuitem value="#{myBundle.ObraSocialPorPacienteHeading}..." outcome="/obraSocialPorPaciente/index" />
                     <p:menuitem value="#{myBundle.PacienteHeading}..." outcome="/paciente/index" />
+                    <p:menuitem value="#{myBundle.TutorHeading}..." outcome="/tutor/index" />
+                </p:submenu>
+                <p:submenu label="Historia Clinica">
+                    <p:menuitem value="#{myBundle.DiagnosticosHeading}..." outcome="/diagnosticos/index" />                   
+                    <p:menuitem value="#{myBundle.AdministrarMedicamentosHeading}..." outcome="/administrarMedicamentos/index" />
+                    <p:menuitem value="#{myBundle.HistClinicaHeading}..." outcome="/histClinica/index" />
+                    <p:menuitem value="#{myBundle.InternacionTransitoriaHeading}..." outcome="/internacionTransitoria/index" />
+                    <p:menuitem value="#{myBundle.MedicamentosHeading}..." outcome="/medicamentos/index" />
                     <p:menuitem value="#{myBundle.PatologiasHeading}..." outcome="/patologias/index" />
                     <p:menuitem value="#{myBundle.ServiciosHeading}..." outcome="/servicios/index" />
-                    <p:menuitem value="#{myBundle.TutorHeading}..." outcome="/tutor/index" />
+                </p:submenu>
+                <p:submenu label="Guardias">
+                    <p:menuitem value="#{myBundle.GuardiasDiariasHeading}..." outcome="/guardiasDiarias/index" />
                 </p:submenu>
             </p:menubar>
         </h:form>

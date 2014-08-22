@@ -24,7 +24,7 @@
                             <f:selectItems value="#{obraSocialController.items}"
                                            var="obraSocialItem"
                                            itemValue="#{obraSocialItem}"
-                                           itemLabel="#{obraSocialItem.codIdObraSocial.toString()}"
+                                           itemLabel="#{obraSocialItem.nombreOs}"
                                            />
 
                         </p:selectOneMenu>
@@ -35,7 +35,7 @@
                             <f:selectItems value="#{pacienteController.items}"
                                            var="pacienteItem"
                                            itemValue="#{pacienteItem}"
-                                           itemLabel="#{pacienteItem.DNIPac.toString()}"
+                                           itemLabel="#{pacienteItem.DNIPac.toString()} #{pacienteItem.apellidoPac}"
                                            />
 
                         </p:selectOneMenu>

@@ -44,7 +44,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListObraSocialPorPacienteTitle_obraSocial}"/>
                     </f:facet>
-                    <h:outputText value="#{item.obraSocial.codIdObraSocial}"/>
+                    <h:outputText value="#{item.obraSocial.nombreOs}"/>
                 </p:column>
 
 
@@ -52,7 +52,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListObraSocialPorPacienteTitle_paciente}"/>
                     </f:facet>
-                    <h:outputText value="#{item.paciente.DNIPac}"/>
+                    <h:outputText value="#{item.paciente.DNIPac} #{item.paciente.apellidoPac} #{item.paciente.nombrePac}"/>
                 </p:column>
 
 
