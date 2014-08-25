@@ -21,15 +21,7 @@
                         <h:outputText value="#{myBundle.ViewCargoLabel_nombreCargo}"/>
                         <h:outputText value="#{cargoController.selected.nombreCargo}" title="#{myBundle.ViewCargoTitle_nombreCargo}"/>
 
-                        <h:outputText value="#{myBundle.ViewCargoLabel_medicosCollection}"/>
-                        <h:selectManyMenu converter="medicosConverter">
-                            <f:selectItems value="#{cargoController.selected.medicosCollection}"
-                                           var="medicosCollectionItem"
-                                           itemValue="#{medicosCollectionItem}"
-                                           itemLabel="#{medicosCollectionItem.matriculaMed.toString()}"
-                                           />
-
-                        </h:selectManyMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="CargoViewDialog.hide()"/>
                 </h:panelGroup>

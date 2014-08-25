@@ -30,12 +30,12 @@
                         <h:outputText value="#{myBundle.ViewEnfermeroLabel_telEnfer}"/>
                         <h:outputText value="#{enfermeroController.selected.telEnfer}" title="#{myBundle.ViewEnfermeroTitle_telEnfer}"/>
 
-                        <h:outputText value="#{myBundle.ViewEnfermeroLabel_guardiasDiariasCollection}"/>
+                        <h:outputText value="Guardias"/>
                         <h:selectManyMenu converter="guardiasDiariasConverter">
                             <f:selectItems value="#{enfermeroController.selected.guardiasDiariasCollection}"
                                            var="guardiasDiariasCollectionItem"
                                            itemValue="#{guardiasDiariasCollectionItem}"
-                                           itemLabel="#{guardiasDiariasCollectionItem.idGuardiasDiarias.toString()}"
+                                           itemLabel="#{guardiasDiariasCollectionItem.diasIddias.descripcion} - #{guardiasDiariasCollectionItem.horaInicio} - #{guardiasDiariasCollectionItem.horaSalida}"
                                            />
 
                         </h:selectManyMenu>

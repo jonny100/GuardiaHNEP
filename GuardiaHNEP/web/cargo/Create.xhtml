@@ -21,15 +21,7 @@
                         <p:outputLabel value="#{myBundle.CreateCargoLabel_nombreCargo}" for="nombreCargo" />
                         <p:inputText id="nombreCargo" value="#{cargoController.selected.nombreCargo}" title="#{myBundle.CreateCargoTitle_nombreCargo}" size="20" maxlength="20"/>
 
-                        <p:outputLabel value="#{myBundle.CreateCargoLabel_medicosCollection}" for="medicosCollection" />
-                        <p:selectManyMenu id="medicosCollection" value="#{cargoController.selected.medicosCollection}"  converter="medicosConverter">
-                            <f:selectItems value="#{medicosController.items}"
-                                           var="medicosCollectionItem"
-                                           itemValue="#{medicosCollectionItem}"
-                                           itemLabel="#{medicosCollectionItem.matriculaMed.toString()}"
-                                           />
-
-                        </p:selectManyMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cargoController.saveNew}" value="#{myBundle.Save}" update="display,:CargoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CargoCreateDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>

@@ -37,7 +37,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAdministrarMedicamentosTitle_dniEnferm}"/>
                     </f:facet>
-                    <h:outputText value="#{item.dniEnferm.dniEnferm}"/>
+                    <h:outputText value="#{item.dniEnferm.dniEnferm} #{item.dniEnferm.apellEnferm} #{item.dniEnferm.nombreEnfer}"/>
                 </p:column>
 
 
@@ -45,7 +45,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAdministrarMedicamentosTitle_paciente}"/>
                     </f:facet>
-                    <h:outputText value="#{item.paciente.DNIPac}"/>
+                    <h:outputText value="#{item.paciente.DNIPac} #{item.paciente.apellidoPac} #{item.paciente.nombrePac}"/>
                 </p:column>
 
 
@@ -53,7 +53,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAdministrarMedicamentosTitle_medicamentos}"/>
                     </f:facet>
-                    <h:outputText value="#{item.medicamentos.codIdMedicamento}"/>
+                    <h:outputText value="#{item.medicamentos.codIdMedicamento} - #{item.medicamentos.nombreMedicamento}"/>
                 </p:column>
 
 

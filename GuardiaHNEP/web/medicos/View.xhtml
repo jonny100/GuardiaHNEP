@@ -35,6 +35,16 @@
 
                         <h:outputText value="#{myBundle.ViewMedicosLabel_especialidadCodIdEsp}"/>
                         <h:outputText value="#{medicosController.selected.especialidadCodIdEsp.codIdEsp}"/>
+                        
+                        <h:outputText value="Cargos"/>
+                        <h:selectManyMenu converter="cargoConverter">
+                            <f:selectItems value="#{medicosController.selected.cargoCollection}"
+                                           var="cargoCollectionItem"
+                                           itemValue="#{cargoCollectionItem}"
+                                           itemLabel="#{cargoCollectionItem.nombreCargo}"
+                                           />
+
+                        </h:selectManyMenu>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="MedicosViewDialog.hide()"/>
                 </h:panelGroup>

@@ -19,10 +19,10 @@
                         <h:outputText value="#{obraSocialPorPacienteController.selected.numeroAfiliado}" title="#{myBundle.ViewObraSocialPorPacienteTitle_numeroAfiliado}"/>
 
                         <h:outputText value="#{myBundle.ViewObraSocialPorPacienteLabel_obraSocial}"/>
-                        <h:outputText value="#{obraSocialPorPacienteController.selected.obraSocial.codIdObraSocial}"/>
+                        <h:outputText value="#{obraSocialPorPacienteController.selected.obraSocial.nombreOs}"/>
 
                         <h:outputText value="#{myBundle.ViewObraSocialPorPacienteLabel_paciente}"/>
-                        <h:outputText value="#{obraSocialPorPacienteController.selected.paciente.DNIPac}"/>
+                        <h:outputText value="#{obraSocialPorPacienteController.selected.paciente.DNIPac} #{obraSocialPorPacienteController.selected.paciente.apellidoPac} #{obraSocialPorPacienteController.selected.paciente.nombrePac}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="ObraSocialPorPacienteViewDialog.hide()"/>
                 </h:panelGroup>

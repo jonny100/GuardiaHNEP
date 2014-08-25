@@ -30,13 +30,14 @@
                         <p:outputLabel value="#{myBundle.CreateEnfermeroLabel_telEnfer}" for="telEnfer" />
                         <p:inputText id="telEnfer" value="#{enfermeroController.selected.telEnfer}" title="#{myBundle.CreateEnfermeroTitle_telEnfer}"/>
 
-                        <p:outputLabel value="#{myBundle.CreateEnfermeroLabel_guardiasDiariasCollection}" for="guardiasDiariasCollection" />
+                        <p:outputLabel value="Guardias" for="guardiasDiariasCollection" />
                         <p:selectManyMenu id="guardiasDiariasCollection" value="#{enfermeroController.selected.guardiasDiariasCollection}"  converter="guardiasDiariasConverter">
                             <f:selectItems value="#{guardiasDiariasController.items}"
                                            var="guardiasDiariasCollectionItem"
                                            itemValue="#{guardiasDiariasCollectionItem}"
-                                           itemLabel="#{guardiasDiariasCollectionItem.idGuardiasDiarias.toString()}"
+                                           itemLabel="#{guardiasDiariasCollectionItem.diasIddias.descripcion} - #{guardiasDiariasCollectionItem.horaInicio} - #{guardiasDiariasCollectionItem.horaSalida}"
                                            />
+                            
 
                         </p:selectManyMenu>
                     </p:panelGrid>

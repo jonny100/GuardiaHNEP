@@ -33,13 +33,13 @@
                         <p:outputLabel value="#{myBundle.CreatePacienteLabel_fechaNacPac}" for="fechaNacPac" />
                         <p:calendar id="fechaNacPac" pattern="MM/dd/yyyy" value="#{pacienteController.selected.fechaNacPac}" title="#{myBundle.CreatePacienteTitle_fechaNacPac}"  showOn="button"/>
 
-                        <p:outputLabel value="#{myBundle.CreatePacienteLabel_tutorDNITut}" for="tutorDNITut" />
+                        <p:outputLabel value="Tutor" for="tutorDNITut" />
                         <p:selectOneMenu id="tutorDNITut" value="#{pacienteController.selected.tutorDNITut}" required="true" requiredMessage="#{myBundle.CreatePacienteRequiredMessage_tutorDNITut}" converter="tutorConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{tutorController.items}"
                                            var="tutorDNITutItem"
                                            itemValue="#{tutorDNITutItem}"
-                                           itemLabel="#{tutorDNITutItem.DNITut.toString()}"
+                                           itemLabel="#{tutorDNITutItem.DNITut} #{tutorDNITutItem.nombreTut} #{tutorDNITutItem.apellidoTut}"
                                            />
 
                         </p:selectOneMenu>

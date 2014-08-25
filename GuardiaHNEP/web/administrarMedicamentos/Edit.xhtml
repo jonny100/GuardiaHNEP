@@ -20,18 +20,18 @@
                             <f:selectItems value="#{enfermeroController.items}"
                                            var="dniEnfermItem"
                                            itemValue="#{dniEnfermItem}"
-                                           itemLabel="#{dniEnfermItem.dniEnferm.toString()}"
+                                           itemLabel="#{dniEnfermItem.dniEnferm.toString()} - #{dniEnfermItem.apellEnferm} #{dniEnfermItem.nombreEnfer}"
                                            />
 
                         </p:selectOneMenu>
 
 
                         <h:outputLabel value="#{myBundle.EditAdministrarMedicamentosLabel_paciente}" for="paciente" />
-                        <h:outputText id="paciente" value="#{administrarMedicamentosController.selected.paciente}" />
+                        <h:outputText id="paciente" value="#{administrarMedicamentosController.selected.paciente.DNIPac} - #{administrarMedicamentosController.selected.paciente.apellidoPac} #{administrarMedicamentosController.selected.paciente.nombrePac}" />
 
 
                         <h:outputLabel value="#{myBundle.EditAdministrarMedicamentosLabel_medicamentos}" for="medicamentos" />
-                        <h:outputText id="medicamentos" value="#{administrarMedicamentosController.selected.medicamentos}" />
+                        <h:outputText id="medicamentos" value="#{administrarMedicamentosController.selected.medicamentos.nombreMedicamento}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{administrarMedicamentosController.save}" value="#{myBundle.Save}" update="display,:AdministrarMedicamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AdministrarMedicamentosEditDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>

@@ -43,6 +43,16 @@
                                            />
 
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Cargos" for="cargoCollection" />
+                        <p:selectManyMenu id="cargoCollection" value="#{medicosController.selected.cargoCollection}"  converter="cargoConverter">
+                            <f:selectItems value="#{cargoController.items}"
+                                           var="cargoCollectionItem"
+                                           itemValue="#{cargoCollectionItem}"
+                                           itemLabel="#{cargoCollectionItem.nombreCargo}"
+                                           />
+
+                        </p:selectManyMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{medicosController.save}" value="#{myBundle.Save}" update="display,:MedicosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MedicosEditDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>

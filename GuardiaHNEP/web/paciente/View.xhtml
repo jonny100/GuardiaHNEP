@@ -35,8 +35,8 @@
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
 
-                        <h:outputText value="#{myBundle.ViewPacienteLabel_tutorDNITut}"/>
-                        <h:outputText value="#{pacienteController.selected.tutorDNITut.DNITut}"/>
+                        <h:outputText value="Tutor"/>
+                        <h:outputText value="#{pacienteController.selected.tutorDNITut.DNITut} #{pacienteController.selected.tutorDNITut.apellidoTut} #{pacienteController.selected.tutorDNITut.nombreTut}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PacienteViewDialog.hide()"/>
                 </h:panelGroup>

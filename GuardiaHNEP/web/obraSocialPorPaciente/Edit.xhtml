@@ -19,11 +19,11 @@
 
 
                         <h:outputLabel value="#{myBundle.EditObraSocialPorPacienteLabel_obraSocial}" for="obraSocial" />
-                        <h:outputText id="obraSocial" value="#{obraSocialPorPacienteController.selected.obraSocial}" />
+                        <h:outputText id="obraSocial" value="#{obraSocialPorPacienteController.selected.obraSocial.nombreOs}" />
 
 
                         <h:outputLabel value="#{myBundle.EditObraSocialPorPacienteLabel_paciente}" for="paciente" />
-                        <h:outputText id="paciente" value="#{obraSocialPorPacienteController.selected.paciente}" />
+                        <h:outputText id="paciente" value="#{obraSocialPorPacienteController.selected.paciente.DNIPac} #{obraSocialPorPacienteController.selected.paciente.apellidoPac} #{obraSocialPorPacienteController.selected.paciente.nombrePac}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{obraSocialPorPacienteController.save}" value="#{myBundle.Save}" update="display,:ObraSocialPorPacienteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ObraSocialPorPacienteEditDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>

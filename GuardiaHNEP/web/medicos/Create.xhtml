@@ -39,10 +39,21 @@
                             <f:selectItems value="#{especialidadController.items}"
                                            var="especialidadCodIdEspItem"
                                            itemValue="#{especialidadCodIdEspItem}"
-                                           itemLabel="#{especialidadCodIdEspItem.codIdEsp.toString()}"
+                                           itemLabel="#{especialidadCodIdEspItem.nombreEsp}"
                                            />
 
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Cargos" for="cargoCollection" />
+                        <p:selectManyMenu id="cargoCollection" value="#{medicosController.selected.cargoCollection}"  converter="cargoConverter">
+                            <f:selectItems value="#{cargoController.items}"
+                                           var="cargoCollectionItem"
+                                           itemValue="#{cargoCollectionItem}"
+                                           itemLabel="#{cargoCollectionItem.nombreCargo}"
+                                           />
+
+                        </p:selectManyMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{medicosController.saveNew}" value="#{myBundle.Save}" update="display,:MedicosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MedicosCreateDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>

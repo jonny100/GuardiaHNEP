@@ -84,14 +84,14 @@
                     </h:outputText>
                 </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.tutorDNITut.DNITut}" filterBy="#{item.tutorDNITut.DNITut}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListPacienteTitle_tutorDNITut}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.tutorDNITut.DNITut}"/>
-                                    </p:column>
-                -->
+
+                <p:column sortBy="#{item.tutorDNITut.DNITut}" filterBy="#{item.tutorDNITut.DNITut}">
+                    <f:facet name="header">
+                        <h:outputText value="Tutor"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tutorDNITut.DNITut} #{item.tutorDNITut.apellidoTut} #{item.tutorDNITut.nombreTut}"/>
+                </p:column>
+
 
             </p:dataTable>
 

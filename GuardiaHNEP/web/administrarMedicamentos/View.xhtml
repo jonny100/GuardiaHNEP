@@ -16,13 +16,13 @@
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{administrarMedicamentosController.selected != null}">
 
                         <h:outputText value="#{myBundle.ViewAdministrarMedicamentosLabel_dniEnferm}"/>
-                        <h:outputText value="#{administrarMedicamentosController.selected.dniEnferm.dniEnferm}"/>
+                        <h:outputText value="#{administrarMedicamentosController.selected.dniEnferm.dniEnferm} - #{administrarMedicamentosController.selected.dniEnferm.apellEnferm} #{administrarMedicamentosController.selected.dniEnferm.nombreEnfer}"/>
 
                         <h:outputText value="#{myBundle.ViewAdministrarMedicamentosLabel_paciente}"/>
-                        <h:outputText value="#{administrarMedicamentosController.selected.paciente.DNIPac}"/>
+                        <h:outputText value="#{administrarMedicamentosController.selected.paciente.DNIPac} - #{administrarMedicamentosController.selected.paciente.apellidoPac} #{administrarMedicamentosController.selected.paciente.nombrePac}"/>
 
                         <h:outputText value="#{myBundle.ViewAdministrarMedicamentosLabel_medicamentos}"/>
-                        <h:outputText value="#{administrarMedicamentosController.selected.medicamentos.codIdMedicamento}"/>
+                        <h:outputText value="#{administrarMedicamentosController.selected.medicamentos.codIdMedicamento} - #{administrarMedicamentosController.selected.medicamentos.nombreMedicamento}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="AdministrarMedicamentosViewDialog.hide()"/>
                 </h:panelGroup>
