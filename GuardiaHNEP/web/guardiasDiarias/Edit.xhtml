@@ -19,17 +19,17 @@
                         <h:outputText id="idGuardiasDiarias" value="#{guardiasDiariasController.selected.idGuardiasDiarias}" />
 
                         <p:outputLabel value="#{myBundle.EditGuardiasDiariasLabel_horaInicio}" for="horaInicio" />
-                        <p:calendar id="horaInicio" pattern="HH:mm:ss" value="#{guardiasDiariasController.selected.horaInicio}" title="#{myBundle.EditGuardiasDiariasTitle_horaInicio}"  showOn="button"/>
+                        <p:calendar id="horaInicio" pattern="HH:mm" timeOnly="true" value="#{guardiasDiariasController.selected.horaInicio}" title="#{myBundle.EditGuardiasDiariasTitle_horaInicio}"  showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.EditGuardiasDiariasLabel_horaSalida}" for="horaSalida" />
-                        <p:calendar id="horaSalida" pattern="HH:mm:ss" value="#{guardiasDiariasController.selected.horaSalida}" title="#{myBundle.EditGuardiasDiariasTitle_horaSalida}"  showOn="button"/>
+                        <p:calendar id="horaSalida" pattern="HH:mm" timeOnly="true" value="#{guardiasDiariasController.selected.horaSalida}" title="#{myBundle.EditGuardiasDiariasTitle_horaSalida}"  showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.EditGuardiasDiariasLabel_medicosCollection}" for="medicosCollection" />
                         <p:selectManyMenu id="medicosCollection" value="#{guardiasDiariasController.selected.medicosCollection}"  converter="medicosConverter">
                             <f:selectItems value="#{medicosController.items}"
                                            var="medicosCollectionItem"
                                            itemValue="#{medicosCollectionItem}"
-                                           itemLabel="#{medicosCollectionItem.matriculaMed.toString()}"
+                                           itemLabel="#{medicosCollectionItem.matriculaMed.toString()} - #{medicosCollectionItem.apellidoMed} #{medicosCollectionItem.nombreMed}"
                                            />
 
                         </p:selectManyMenu>
@@ -51,7 +51,7 @@
                             <f:selectItems value="#{medicosController.items}"
                                            var="jefeServicioItem"
                                            itemValue="#{jefeServicioItem}"
-                                           itemLabel="#{jefeServicioItem.matriculaMed.toString()}"
+                                           itemLabel="#{jefeServicioItem.matriculaMed.toString()} - #{jefeServicioItem.apellidoMed} #{jefeServicioItem.nombreMed}"
                                            />
 
                         </p:selectOneMenu>
