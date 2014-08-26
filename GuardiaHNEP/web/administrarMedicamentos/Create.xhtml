@@ -48,7 +48,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{administrarMedicamentosController.saveNew}" value="#{myBundle.Save}" update="display,:AdministrarMedicamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AdministrarMedicamentosCreateDialog);">
+                    <p:commandButton actionListener="#{administrarMedicamentosController.controlStock()}" value="#{myBundle.Save}" update="display,:AdministrarMedicamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AdministrarMedicamentosCreateDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
 

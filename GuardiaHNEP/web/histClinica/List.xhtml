@@ -73,7 +73,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHistClinicaTitle_derivacion}"/>
                     </f:facet>
-                    <h:outputText value="#{item.derivacion.codIdServ}"/>
+                    <h:outputText value="#{item.derivacion.codIdServ} - #{item.derivacion.nombreServ}"/>
                 </p:column>
 
 
@@ -81,7 +81,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHistClinicaTitle_dniPaciente}"/>
                     </f:facet>
-                    <h:outputText value="#{item.dniPaciente.DNIPac}"/>
+                    <h:outputText value="#{item.dniPaciente.DNIPac} - #{item.dniPaciente.apellidoPac} #{item.dniPaciente.nombrePac}"/>
                 </p:column>
 
                 <!--

@@ -30,19 +30,21 @@
                         <h:outputText value="#{histClinicaController.selected.talla}" title="#{myBundle.ViewHistClinicaTitle_talla}"/>
 
                         <h:outputText value="#{myBundle.ViewHistClinicaLabel_derivacion}"/>
-                        <h:outputText value="#{histClinicaController.selected.derivacion.codIdServ}"/>
+                        <h:outputText value="#{histClinicaController.selected.derivacion.codIdServ} - #{histClinicaController.selected.derivacion.nombreServ}"/>
 
                         <h:outputText value="#{myBundle.ViewHistClinicaLabel_dniPaciente}"/>
-                        <h:outputText value="#{histClinicaController.selected.dniPaciente.DNIPac}"/>
+                        <h:outputText value="#{histClinicaController.selected.dniPaciente.DNIPac} - #{histClinicaController.selected.dniPaciente.apellidoPac} #{histClinicaController.selected.dniPaciente.nombrePac}"/>
 
                         <h:outputText value="#{myBundle.ViewHistClinicaLabel_codDiagnostico}"/>
-                        <h:outputText value="#{histClinicaController.selected.codDiagnostico.codDiagnostico}"/>
-
-                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_medicosMatriculaMed}"/>
-                        <h:outputText value="#{histClinicaController.selected.medicosMatriculaMed.matriculaMed}"/>
+                        <h:outputText value="#{histClinicaController.selected.codDiagnostico.codDiagnostico} - #{histClinicaController.selected.codDiagnostico.nomDiagnostico}"/>
 
                         <h:outputText value="#{myBundle.ViewHistClinicaLabel_codPatologia}"/>
-                        <h:outputText value="#{histClinicaController.selected.codPatologia.codPatologia}"/>
+                        <h:outputText value="#{histClinicaController.selected.codPatologia.codPatologia} - #{histClinicaController.selected.codPatologia.nomPatologia}"/>
+                        
+                        <h:outputText value="#{myBundle.ViewHistClinicaLabel_medicosMatriculaMed}"/>
+                        <h:outputText value="#{histClinicaController.selected.medicosMatriculaMed.matriculaMed} - #{histClinicaController.selected.medicosMatriculaMed.apellidoMed} #{histClinicaController.selected.medicosMatriculaMed.nombreMed}"/>
+
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="HistClinicaViewDialog.hide()"/>
                 </h:panelGroup>

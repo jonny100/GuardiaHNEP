@@ -13,6 +13,7 @@ public class MedicamentosController extends AbstractController<Medicamentos> {
 
     @Inject
     private AdministrarMedicamentosController administrarMedicamentosCollectionController;
+    private Medicamentos nuevoReg;
 
     public MedicamentosController() {
         // Inform the Abstract parent controller of the concrete Medicamentos?cap_first Entity
@@ -38,5 +39,5 @@ public class MedicamentosController extends AbstractController<Medicamentos> {
         }
         return "/administrarMedicamentos/index";
     }
-
+    
 }

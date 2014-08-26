@@ -33,7 +33,7 @@
                             <f:selectItems value="#{serviciosController.items}"
                                            var="derivacionItem"
                                            itemValue="#{derivacionItem}"
-                                           itemLabel="#{derivacionItem.codIdServ.toString()}"
+                                           itemLabel="#{derivacionItem.codIdServ.toString()} - #{derivacionItem.nombreServ}"
                                            />
 
                         </p:selectOneMenu>
@@ -44,7 +44,7 @@
                             <f:selectItems value="#{pacienteController.items}"
                                            var="dniPacienteItem"
                                            itemValue="#{dniPacienteItem}"
-                                           itemLabel="#{dniPacienteItem.DNIPac.toString()}"
+                                           itemLabel="#{dniPacienteItem.DNIPac.toString()} - #{dniPacienteItem.apellidoPac} #{dniPacienteItem.nombrePac}"
                                            />
 
                         </p:selectOneMenu>
@@ -55,7 +55,18 @@
                             <f:selectItems value="#{diagnosticosController.items}"
                                            var="codDiagnosticoItem"
                                            itemValue="#{codDiagnosticoItem}"
-                                           itemLabel="#{codDiagnosticoItem.codDiagnostico.toString()}"
+                                           itemLabel="#{codDiagnosticoItem.codDiagnostico.toString()} - #{codDiagnosticoItem.nomDiagnostico}"
+                                           />
+
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{myBundle.EditHistClinicaLabel_codPatologia}" for="codPatologia" />
+                        <p:selectOneMenu id="codPatologia" value="#{histClinicaController.selected.codPatologia}" required="true" requiredMessage="#{myBundle.EditHistClinicaRequiredMessage_codPatologia}" converter="patologiasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{patologiasController.items}"
+                                           var="codPatologiaItem"
+                                           itemValue="#{codPatologiaItem}"
+                                           itemLabel="#{codPatologiaItem.codPatologia.toString()} - #{codPatologiaItem.nomPatologia}"
                                            />
 
                         </p:selectOneMenu>
@@ -66,21 +77,12 @@
                             <f:selectItems value="#{medicosController.items}"
                                            var="medicosMatriculaMedItem"
                                            itemValue="#{medicosMatriculaMedItem}"
-                                           itemLabel="#{medicosMatriculaMedItem.matriculaMed.toString()}"
+                                           itemLabel="#{medicosMatriculaMedItem.matriculaMed.toString()} - #{medicosMatriculaMedItem.apellidoMed} #{medicosMatriculaMedItem.nombreMed}"
                                            />
 
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{myBundle.EditHistClinicaLabel_codPatologia}" for="codPatologia" />
-                        <p:selectOneMenu id="codPatologia" value="#{histClinicaController.selected.codPatologia}" required="true" requiredMessage="#{myBundle.EditHistClinicaRequiredMessage_codPatologia}" converter="patologiasConverter">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{patologiasController.items}"
-                                           var="codPatologiaItem"
-                                           itemValue="#{codPatologiaItem}"
-                                           itemLabel="#{codPatologiaItem.codPatologia.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{histClinicaController.save}" value="#{myBundle.Save}" update="display,:HistClinicaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,HistClinicaEditDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>

@@ -1,11 +1,17 @@
 package bbp;
 
+import bbp.util.JsfUtil;
 import entity.AdministrarMedicamentos;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+import entity.Medicamentos;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "administrarMedicamentosController")
 @ViewScoped
@@ -17,6 +23,9 @@ public class AdministrarMedicamentosController extends AbstractController<Admini
     private PacienteController pacienteController;
     @Inject
     private MedicamentosController medicamentosController;
+    private List<Medicamentos> lst_m = new ArrayList();
+    @EJB
+    private sbp.MedicamentosFacade ejbFacade;
 
     public AdministrarMedicamentosController() {
         // Inform the Abstract parent controller of the concrete AdministrarMedicamentos?cap_first Entity
@@ -79,6 +88,26 @@ public class AdministrarMedicamentosController extends AbstractController<Admini
     public void prepareMedicamentos(ActionEvent event) {
         if (this.getSelected() != null && medicamentosController.getSelected() == null) {
             medicamentosController.setSelected(this.getSelected().getMedicamentos());
+        }
+    }
+
+    public void controlStock() {
+        lst_m = ejbFacade.findAll();
+        boolean ok = true;
+        Iterator iter = lst_m.listIterator();
+        while (iter.hasNext()) {
+            Medicamentos m = (Medicamentos) iter.next();
+            if (m.getCodIdMedicamento().equals(getSelected().getMedicamentos().getCodIdMedicamento())) {
+                if (m.getStockMedicamentos() > 0) {     
+                   m.setStockMedicamentos(m.getStockMedicamentos() - 1);
+                } else {
+                    JsfUtil.addErrorMessage("No hay stock del medicamneto");
+                    ok = false;
+                }
+            }
+        }
+        if (ok) {
+            saveNew(null);
         }
     }
 }
