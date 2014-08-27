@@ -1,6 +1,9 @@
 package bbp;
 
 import entity.GuardiasDiarias;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -84,5 +87,11 @@ public class GuardiasDiariasController extends AbstractController<GuardiasDiaria
         if (this.getSelected() != null && jefeServicioController.getSelected() == null) {
             jefeServicioController.setSelected(this.getSelected().getJefeServicio());
         }
+    }
+    
+    public int obtenerHoraMinuto(Date dia) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(dia);
+        return cal.get(Calendar.HOUR_OF_DAY);
     }
 }
