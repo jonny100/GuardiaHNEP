@@ -12,6 +12,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import sbp.MedicamentosFacade;
 
 @Named(value = "administrarMedicamentosController")
 @ViewScoped
@@ -98,8 +99,14 @@ public class AdministrarMedicamentosController extends AbstractController<Admini
         while (iter.hasNext()) {
             Medicamentos m = (Medicamentos) iter.next();
             if (m.getCodIdMedicamento().equals(getSelected().getMedicamentos().getCodIdMedicamento())) {
-                if (m.getStockMedicamentos() > 0) {     
-                   m.setStockMedicamentos(m.getStockMedicamentos() - 1);
+                if (m.getStockMedicamentos() > 0) {
+                   Integer stock = m.getStockMedicamentos() - 1; 
+                   medicamentosController.prepareCreate(null);
+                   medicamentosController.getSelected().setCodIdMedicamento(m.getCodIdMedicamento());
+                   medicamentosController.getSelected().setNombreMedicamento(m.getNombreMedicamento());
+                   medicamentosController.getSelected().setStockMedicamentos(stock);
+                   medicamentosController.getSelected().setPresentacionTipo(m.getPresentacionTipo());
+                   medicamentosController.save(null);
                 } else {
                     JsfUtil.addErrorMessage("No hay stock del medicamneto");
                     ok = false;
@@ -109,5 +116,21 @@ public class AdministrarMedicamentosController extends AbstractController<Admini
         if (ok) {
             saveNew(null);
         }
+    }
+
+    public List<Medicamentos> getLst_m() {
+        return lst_m;
+    }
+
+    public void setLst_m(List<Medicamentos> lst_m) {
+        this.lst_m = lst_m;
+    }
+
+    public MedicamentosFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(MedicamentosFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
     }
 }

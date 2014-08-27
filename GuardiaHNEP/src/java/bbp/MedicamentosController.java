@@ -1,6 +1,7 @@
 package bbp;
 
 import entity.Medicamentos;
+import java.util.Iterator;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -13,7 +14,7 @@ public class MedicamentosController extends AbstractController<Medicamentos> {
 
     @Inject
     private AdministrarMedicamentosController administrarMedicamentosCollectionController;
-    private Medicamentos nuevoReg;
+    
 
     public MedicamentosController() {
         // Inform the Abstract parent controller of the concrete Medicamentos?cap_first Entity
@@ -39,5 +40,7 @@ public class MedicamentosController extends AbstractController<Medicamentos> {
         }
         return "/administrarMedicamentos/index";
     }
+    
+    
     
 }
