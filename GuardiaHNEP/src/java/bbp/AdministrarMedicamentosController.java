@@ -4,6 +4,7 @@ import bbp.util.JsfUtil;
 import entity.AdministrarMedicamentos;
 import entity.Medicamentos;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -114,6 +115,8 @@ public class AdministrarMedicamentosController extends AbstractController<Admini
             }
         }
         if (ok) {
+            Date ahora = new Date();
+            getSelected().setFecha(ahora);
             saveNew(null);
         }
     }

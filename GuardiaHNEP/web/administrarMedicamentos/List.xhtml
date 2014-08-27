@@ -55,6 +55,15 @@
                     </f:facet>
                     <h:outputText value="#{item.medicamentos.codIdMedicamento} - #{item.medicamentos.nombreMedicamento}"/>
                 </p:column>
+                
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha y Hora"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime timeZone="America/Argentina/Buenos_Aires" pattern="dd/MM/yyyy HH:mm" />
+                    </h:outputText>
+                </p:column>
 
 
             </p:dataTable>

@@ -7,6 +7,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,6 +44,9 @@ public class AdministrarMedicamentos implements Serializable {
     @JoinColumn(name = "id_medicamento", referencedColumnName = "cod_id_medicamento", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Medicamentos medicamentos;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
 
     public AdministrarMedicamentos() {
     }
@@ -82,6 +89,14 @@ public class AdministrarMedicamentos implements Serializable {
 
     public void setMedicamentos(Medicamentos medicamentos) {
         this.medicamentos = medicamentos;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     @Override
