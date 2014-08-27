@@ -35,7 +35,7 @@
                             <f:selectItems value="#{guardiasDiariasController.items}"
                                            var="guardiasDiariasCollectionItem"
                                            itemValue="#{guardiasDiariasCollectionItem}"
-                                           itemLabel="#{guardiasDiariasCollectionItem.diasIddias.descripcion} - #{guardiasDiariasCollectionItem.horaInicio} - #{guardiasDiariasCollectionItem.horaSalida}"
+                                           itemLabel="#{guardiasDiariasCollectionItem.diasIddias.descripcion} - #{guardiasDiariasController.obtenerHoraMinuto(guardiasDiariasCollectionItem.horaInicio)} - #{guardiasDiariasController.obtenerHoraMinuto(guardiasDiariasCollectionItem.horaSalida)}"
                                            />
 
                         </p:selectManyMenu>
