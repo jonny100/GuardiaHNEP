@@ -17,14 +17,20 @@ import org.jboss.weld.context.RequestContext;
 @ViewScoped
 public class LoginController extends AbstractController<Login> {
 
-    @Inject
-    private HistClinicaController histClinicaCollectionController;
     @EJB
     private sbp.LoginFacade ejbFacade;
     private List<Login> lst_l = new ArrayList();
     private String username;
     private String password;
     private static String user;
+
+    public static String getUser() {
+        return user;
+    }
+
+    public static void setUser(String user) {
+        LoginController.user = user;
+    }
 
     public LoginController() {
         // Inform the Abstract parent controller of the concrete Servicios?cap_first Entity
@@ -53,7 +59,7 @@ public class LoginController extends AbstractController<Login> {
             Login l = (Login) itera.next();
             if(l.getUsername().equals(username) & l.getPassword().equals(password)){
                 ok = true;
-                user = l.getUsername();
+                user = username;
                 break;
             }            
     }
@@ -91,4 +97,6 @@ public class LoginController extends AbstractController<Login> {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    
 }

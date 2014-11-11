@@ -9,7 +9,7 @@
     <ui:composition>
         <h:form id="menuForm">
             <p:menubar>
-                <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:menuitem value="#{myBundle.Home}" outcome="/home" icon="ui-icon-home"/>
                 <p:submenu label="Plantel">
                     <p:menuitem value="#{myBundle.CargoHeading}..." outcome="/cargo/index" />
                     <p:menuitem value="#{myBundle.EnfermeroHeading}..." outcome="/enfermero/index" />
@@ -35,6 +35,11 @@
                 <p:submenu label="Guardias">
                     <p:menuitem value="#{myBundle.GuardiasDiariasHeading}..." outcome="/guardiasDiarias/index" />
                 </p:submenu>
+                <p:submenu label="Usuarios">
+                    <p:menuitem value="Alta de Usuarios" outcome="/login/index" />
+                </p:submenu>
+                <p:menuitem value="Salir" outcome="/index" icon="ui-icon-circle-close"/>
+                <p:menuitem value="Ver Log" outcome="/log/index" />
             </p:menubar>
         </h:form>
     </ui:composition>

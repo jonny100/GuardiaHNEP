@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LoginCreateDlg" widgetVar="LoginCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Usuario" closeOnEscape="true">
+
+            <h:form id="LoginCreateForm">
+
+                <h:panelGroup id="display" rendered="#{loginController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="Usuario" for="username" />
+                        <p:inputText id="username" value="#{loginController.selected.username}" title="Usuario" required="true" requiredMessage="El Usuario es Requerido"/>
+
+                        <p:outputLabel value="Contraseña" for="password" />
+                        <p:password id="password" value="#{loginController.selected.password}" title="Contraseña" size="20" maxlength="20" required="true" requiredMessage="La Contraseña es Requerida"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{loginController.saveNew}" value="#{myBundle.Save}" update="display,:LoginListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,LoginCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="LoginCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

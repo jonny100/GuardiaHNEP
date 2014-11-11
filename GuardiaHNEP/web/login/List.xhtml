@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="LoginListForm">
+
+        <p:panel header="Usuarios">
+            <p:contextMenu id="ServiciosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('LoginListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('LoginListForm:deleteButton').click();" icon="ui-icon-trash"/>
+              </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{loginController.items}"
+                         var="item"
+                         rowKey="#{item.idlogin}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{loginController.selected}">
+
+                <p:ajax event="rowSelect"   update=":LoginListForm:createButton :LoginListForm:deleteButton :LoginListForm:ServiciosDataTableContextMenu" listener="#{loginController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":LoginListForm:createButton :LoginListForm:deleteButton :LoginListForm:ServiciosDataTableContextMenu" listener="#{loginController.resetParents}"/>
+          
+                <p:column sortBy="#{item.username}" filterBy="#{item.username}">
+                    <f:facet name="header">
+                        <h:outputText value="Usuarios"/>
+                    </f:facet>
+                    <h:outputText value="#{item.username}"/>
+                </p:column>
+
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{loginController.prepareCreate}" update=":LoginCreateForm" oncomplete="LoginCreateDialog.show()"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{loginController.delete}" update=":growl,datalist" disabled="#{empty loginController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -13,6 +13,8 @@ public class ObraSocialController extends AbstractController<ObraSocial> {
 
     @Inject
     private ObraSocialPorPacienteController obraSocialPorPacienteCollectionController;
+    @Inject
+    private LogController logController;
 
     public ObraSocialController() {
         // Inform the Abstract parent controller of the concrete ObraSocial?cap_first Entity
@@ -39,4 +41,8 @@ public class ObraSocialController extends AbstractController<ObraSocial> {
         return "/obraSocialPorPaciente/index";
     }
 
+    public void cargarOS(){
+        logController.cargarLog("Se cargó una Obra Social");
+        saveNew(null);
+    }
 }

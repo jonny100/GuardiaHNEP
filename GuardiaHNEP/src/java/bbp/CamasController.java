@@ -13,6 +13,8 @@ public class CamasController extends AbstractController<Camas> {
 
     @Inject
     private InternacionTransitoriaController internacionTransitoriaNumInternController;
+    @Inject
+    private LogController logController;
 
     public CamasController() {
         // Inform the Abstract parent controller of the concrete Camas?cap_first Entity
@@ -37,5 +39,10 @@ public class CamasController extends AbstractController<Camas> {
         if (this.getSelected() != null && internacionTransitoriaNumInternController.getSelected() == null) {
             internacionTransitoriaNumInternController.setSelected(this.getSelected().getInternacionTransitoriaNumIntern());
         }
+    }
+    
+    public void cargarCama(){
+        logController.cargarLog("Se cargó una Cama");
+        saveNew(null);
     }
 }

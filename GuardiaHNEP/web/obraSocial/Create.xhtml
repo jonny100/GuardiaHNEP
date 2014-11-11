@@ -27,7 +27,7 @@
                         <p:outputLabel value="#{myBundle.CreateObraSocialLabel_telefOs}" for="telefOs" />
                         <p:inputText id="telefOs" value="#{obraSocialController.selected.telefOs}" title="#{myBundle.CreateObraSocialTitle_telefOs}"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{obraSocialController.saveNew}" value="#{myBundle.Save}" update="display,:ObraSocialListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ObraSocialCreateDialog);">
+                    <p:commandButton actionListener="#{obraSocialController.cargarOS()}" value="#{myBundle.Save}" update="display,:ObraSocialListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ObraSocialCreateDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
 

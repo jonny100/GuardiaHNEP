@@ -1,6 +1,7 @@
 package bbp;
 
 import entity.Log;
+import java.util.Date;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -13,6 +14,8 @@ public class LogController extends AbstractController<Log> {
 
     @Inject
     private HistClinicaController histClinicaCollectionController;
+    @Inject
+    private LoginController loginController;
 
     public LogController() {
         // Inform the Abstract parent controller of the concrete Servicios?cap_first Entity
@@ -33,5 +36,13 @@ public class LogController extends AbstractController<Log> {
      * @return navigation outcome for HistClinica page
      */
    
+    public void cargarLog(String actividad){
+        Date ahora = new Date();
+        prepareCreate(null);
+        getSelected().setUser("jonny");
+        getSelected().setFecha(ahora);
+        getSelected().setActividad(actividad);
+        saveNew(null);
+    }
 
 }

@@ -32,7 +32,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{camasController.saveNew}" value="#{myBundle.Save}" update="display,:CamasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CamasCreateDialog);">
+                    <p:commandButton actionListener="#{camasController.cargarCama()}" value="#{myBundle.Save}" update="display,:CamasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CamasCreateDialog);">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
 
