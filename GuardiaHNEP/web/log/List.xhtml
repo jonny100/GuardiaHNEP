@@ -23,11 +23,11 @@
                          sortOrder="descending">
 
                 
-                <p:column sortBy="#{item.user}" filterBy="#{item.user}">
+                <p:column sortBy="#{item.idloginLogin.idlogin}" filterBy="#{item.idloginLogin.idlogin}">
                     <f:facet name="header">
                         <h:outputText value="Usuarios"/>
                     </f:facet>
-                    <h:outputText value="#{item.user}"/>
+                    <h:outputText value="#{item.idloginLogin.username}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.fecha}" >

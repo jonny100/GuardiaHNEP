@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -32,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Log.findAll", query = "SELECT l FROM Log l"),
     @NamedQuery(name = "Log.findByIdlog", query = "SELECT l FROM Log l WHERE l.idlog = :idlog"),
-    @NamedQuery(name = "Log.findByUser", query = "SELECT l FROM Log l WHERE l.user = :user"),
     @NamedQuery(name = "Log.findByFecha", query = "SELECT l FROM Log l WHERE l.fecha = :fecha"),
     @NamedQuery(name = "Log.findByActividad", query = "SELECT l FROM Log l WHERE l.actividad = :actividad")})
 public class Log implements Serializable {
@@ -42,15 +43,15 @@ public class Log implements Serializable {
     @Basic(optional = false)
     @Column(name = "idlog")
     private Integer idlog;
-    @Size(max = 45)
-    @Column(name = "user")
-    private String user;
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @Size(max = 250)
     @Column(name = "actividad")
     private String actividad;
+    @JoinColumn(name = "idlogin_login", referencedColumnName = "idlogin")
+    @ManyToOne
+    private Login idloginLogin;
 
     public Log() {
     }
@@ -67,14 +68,6 @@ public class Log implements Serializable {
         this.idlog = idlog;
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
     public Date getFecha() {
         return fecha;
     }
@@ -89,6 +82,14 @@ public class Log implements Serializable {
 
     public void setActividad(String actividad) {
         this.actividad = actividad;
+    }
+
+    public Login getIdloginLogin() {
+        return idloginLogin;
+    }
+
+    public void setIdloginLogin(Login idloginLogin) {
+        this.idloginLogin = idloginLogin;
     }
 
     @Override

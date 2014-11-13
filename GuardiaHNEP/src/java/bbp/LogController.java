@@ -39,7 +39,7 @@ public class LogController extends AbstractController<Log> {
     public void cargarLog(String actividad){
         Date ahora = new Date();
         prepareCreate(null);
-        getSelected().setUser(loginController.getUser());
+        getSelected().setIdloginLogin(loginController.getLogin());
         getSelected().setFecha(ahora);
         getSelected().setActividad(actividad);
         saveNew(null);

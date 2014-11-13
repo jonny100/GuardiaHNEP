@@ -22,9 +22,8 @@ public class LoginController extends AbstractController<Login> {
     private List<Login> lst_l = new ArrayList();
     private String username;
     private String password;
-    //private static String user;
     private static String user;
-
+    private static Login login;
     
 
     public LoginController() {
@@ -54,7 +53,8 @@ public class LoginController extends AbstractController<Login> {
             Login l = (Login) itera.next();
             if(l.getUsername().equals(username) & l.getPassword().equals(password)){
                 ok = true;
-                user = username;
+                user = l.getUsername();
+                login = l;
                 break;
             }            
     }
@@ -100,6 +100,16 @@ public class LoginController extends AbstractController<Login> {
     public static void setUser(String user) {
         LoginController.user = user;
     }
+
+    public static Login getLogin() {
+        return login;
+    }
+
+    public static void setLogin(Login login) {
+        LoginController.login = login;
+    }
+
+    
 
     
 }
